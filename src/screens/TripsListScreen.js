@@ -7,9 +7,27 @@ export const TripsListScreen = () => {
 
   return (
     <View>
-      <Text>TripsListScreen</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('MainScreen')}>
-        <Text>Volver</Text>
+      <Text style={{textAlign: 'center', fontSize: 25, fontWeight: 'bold'}}>
+        Lista de viajes
+      </Text>
+      <TouchableOpacity
+        style={{
+          backgroundColor: 'gray',
+          width: '40%',
+          borderRadius: 30,
+          alignSelf: 'center',
+        }}
+        onPress={() => navigation.navigate('MainScreen')}>
+        <Text
+          style={{
+            color: '#fff',
+            textAlign: 'center',
+            fontWeight: 'bold',
+            fontSize: 20,
+            padding: 10,
+          }}>
+          Volver
+        </Text>
       </TouchableOpacity>
     </View>
   );
