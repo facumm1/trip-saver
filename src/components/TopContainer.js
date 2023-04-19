@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
 import {AddTripButton} from './Buttons/AddTripButton';
 import {AddTripModal} from './Modals/AddTripModal';
