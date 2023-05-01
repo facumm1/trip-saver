@@ -1,7 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {View, Text, TouchableOpacity} from 'react-native';
-import readFirestore from '../helpers/readFirestore';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+  StyleSheet,
+} from 'react-native';
+import {delFirestore, readFirestore} from '../helpers/firestoreActions';
+import buttonStyles from '../styles/buttonStyle';
 
 export const TripsListScreen = () => {
   const navigation = useNavigation();
@@ -9,54 +16,101 @@ export const TripsListScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    readFirestore()
-      .then(res => {
-        setTrips(res);
-        setIsLoading(false);
-      })
-      .catch(console.error);
+    if (isLoading) {
+      readFirestore()
+        .then(res => {
+          res.forEach(trip => setTrips(prev => [...prev, trip.data()]));
+          setIsLoading(false);
+        })
+        .catch(console.error);
+    }
   }, []);
-
-  //useEffect(() => console.log(trips[0].data().pasajero), [trips]);
 
   return (
     <View>
-      <Text style={{textAlign: 'center', fontSize: 25, fontWeight: 'bold'}}>
-        Lista de viajes
-      </Text>
+      {/* Title */}
+      <Text style={tripsScreenStyles.title}>Lista de viajes</Text>
 
-      <View style={{borderWidth: 2}}>
+      {/* Trips */}
+      <View style={{alignItems: 'center'}}>
         {isLoading ? (
-          <Text>Cargando...</Text>
-        ) : (
-          <View style={{borderWidth: 1, margin: 10, width: '45%'}}>
-            <Text>{trips[0].data().pasajero}</Text>
-            <Text>{trips[0].data().importe}</Text>
-            <Text>{trips[0].data().desde}</Text>
-            <Text>{trips[0].data().hacia}</Text>
+          <View style={{paddingVertical: 50, width: '100%'}}>
+            <ActivityIndicator size="large" color="#000" />
           </View>
+        ) : (
+          trips.map((trip, index) => (
+            <View style={tripsScreenStyles.tripContainer} key={index + 1}>
+              <View style={{marginHorizontal: 10}}>
+                <Text style={{fontSize: 20, fontWeight: '500'}}>
+                  {trip.pasajero}
+                </Text>
+                <Text style={{fontSize: 15}}>Importe: ${trip.importe}</Text>
+                <Text style={{fontSize: 15}}>Desde: {trip.desde}</Text>
+                <Text style={{fontSize: 15}}>Hacia: {trip.hacia}</Text>
+              </View>
+              <TouchableOpacity
+                onPress={() => {}}
+                style={tripsScreenStyles.tripDate}>
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: 22,
+                  }}>
+                  {trip.fecha}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  delFirestore(trip.id);
+                  setTrips(prevTrips =>
+                    prevTrips.filter(item => item.id !== trip.id),
+                  );
+                }}
+                style={tripsScreenStyles.btnDel}>
+                <Text style={{fontSize: 17, color: '#fff', padding: 5}}>
+                  Borrar
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ))
         )}
       </View>
 
+      {/* Buttons */}
       <TouchableOpacity
-        style={{
-          backgroundColor: 'gray',
-          width: '40%',
-          borderRadius: 30,
-          alignSelf: 'center',
-        }}
+        style={buttonStyles.btn}
         onPress={() => navigation.navigate('MainScreen')}>
-        <Text
-          style={{
-            color: '#fff',
-            textAlign: 'center',
-            fontWeight: 'bold',
-            fontSize: 20,
-            padding: 10,
-          }}>
-          Volver
-        </Text>
+        <Text style={buttonStyles.textBtn}>Volver</Text>
       </TouchableOpacity>
     </View>
   );
 };
+
+const tripsScreenStyles = StyleSheet.create({
+  title: {textAlign: 'center', fontSize: 25, fontWeight: 'bold'},
+  tripContainer: {
+    margin: 5,
+    width: '75%',
+    borderWidth: 1,
+    borderRadius: 15,
+    flexDirection: 'row',
+    overflow: 'hidden',
+  },
+  tripDate: {
+    fontWeight: 'bold',
+    fontSize: 22,
+    borderWidth: 1,
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    padding: 5,
+  },
+  btnDel: {
+    backgroundColor: '#b32727',
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    borderTopLeftRadius: 10,
+  },
+});
