@@ -40,12 +40,16 @@ export const delFirestore = async tripId => {
   }
 };
 
-export const updateFireStore = async (tripId, tripInfo) => {
-  await firestore()
-    .collection('viajes')
-    .doc(tripId)
-    .update(tripInfo)
-    .then(() => {
-      console.log('Updating user...');
-    });
+export const updateFireStore = async tripInfo => {
+  try {
+    await firestore()
+      .collection('viajes')
+      .doc(tripInfo.id)
+      .update(tripInfo)
+      .then(() => {
+        console.log('Updating user...');
+      });
+  } catch (err) {
+    console.log('delFirestore error:', err);
+  }
 };

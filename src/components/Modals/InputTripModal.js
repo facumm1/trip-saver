@@ -1,39 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
 import {Modal, Text, TextInput, View} from 'react-native';
 import buttonStyles from '../../styles/buttonStyle';
-import {writeFirestore} from '../../helpers/firestoreActions';
-import uuid from 'react-native-uuid';
+import {updateFireStore, writeFirestore} from '../../helpers/firestoreActions';
+import initialTripInfo from '../../helpers/initialTripInfo';
 
 const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 
-export const AddTripModal = ({addTripModal, setAddTripModal}) => {
-  const initialTripInfo = {
-    id: uuid.v4(),
-    pasajero: '',
-    importe: '',
-    desde: '',
-    hacia: '',
-    fecha: '',
-  };
-
-  const [tripInfo, setTripInfo] = useState(initialTripInfo);
-  //const [tripId, setTripId] = useState(0);
-
-  useEffect(() => {
-    console.log(tripInfo);
-  }, [tripInfo]);
+const InputTripModal = ({
+  tripModal,
+  title,
+  addTripFirestore = false,
+  tripSelected = initialTripInfo(),
+  setTripModal,
+  setEditedTrip,
+}) => {
+  const [tripInfo, setTripInfo] = useState(tripSelected);
 
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={addTripModal}
-      onRequestClose={() => setAddTripModal(prevStatus => !prevStatus)}>
+      visible={tripModal}
+      onRequestClose={() => setTripModal(prevStatus => !prevStatus)}>
       <View style={modalTripStyles.container}>
         <View>
           {/* Title */}
-          <Text style={modalTripStyles.title}>Añadir un viaje nuevo</Text>
+          <Text style={modalTripStyles.title}>{title}</Text>
 
           {/* Inputs */}
           <View style={{alignItems: 'center'}}>
@@ -110,9 +103,15 @@ export const AddTripModal = ({addTripModal, setAddTripModal}) => {
                 marginRight: 6,
               }}
               onPress={() => {
-                setAddTripModal(prevStatus => !prevStatus);
-                writeFirestore(tripInfo);
-                setTripInfo(initialTripInfo);
+                if (addTripFirestore) {
+                  writeFirestore(tripInfo);
+                } else {
+                  updateFireStore(tripInfo);
+                  setEditedTrip(prev => ({updated: true, id: ''}));
+                }
+
+                setTripModal(prevStatus => !prevStatus);
+                setTripInfo(initialTripInfo());
               }}>
               <Text
                 style={{
@@ -120,7 +119,7 @@ export const AddTripModal = ({addTripModal, setAddTripModal}) => {
                   color: 'gray',
                   marginHorizontal: 5,
                 }}>
-                Agregar
+                {addTripFirestore ? 'Añadir' : 'Modificar'}
               </Text>
             </TouchableOpacity>
 
@@ -131,8 +130,12 @@ export const AddTripModal = ({addTripModal, setAddTripModal}) => {
                 marginLeft: 6,
               }}
               onPress={() => {
-                setAddTripModal(prevStatus => !prevStatus);
-                setTripInfo(initialTripInfo);
+                if (!addTripFirestore) {
+                  setEditedTrip(prev => ({...prev, id: ''}));
+                }
+
+                setTripModal(prevStatus => !prevStatus);
+                setTripInfo(initialTripInfo());
               }}>
               <Text style={{...buttonStyles.textBtn, color: 'gray'}}>
                 Cancelar
@@ -181,3 +184,5 @@ const modalTripStyles = StyleSheet.create({
     marginTop: 5,
   },
 });
+
+export default InputTripModal;

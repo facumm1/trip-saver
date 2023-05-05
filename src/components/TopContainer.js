@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {AddTripButton} from './Buttons/AddTripButton';
-import {AddTripModal} from './Modals/AddTripModal';
+import InputTripModal from './Modals/InputTripModal';
 
 export const TopContainer = ({userName}) => {
   const [addTripModal, setAddTripModal] = useState(false);
@@ -18,12 +18,14 @@ export const TopContainer = ({userName}) => {
         </Text>
       </View>
 
-      <AddTripModal
-        addTripModal={addTripModal}
-        setAddTripModal={setAddTripModal}
+      <InputTripModal
+        tripModal={addTripModal}
+        setTripModal={setAddTripModal}
+        title="Añadir un viaje nuevo"
+        addTripFirestore
       />
 
-      <AddTripButton setAddTripModal={setAddTripModal} />
+      <AddTripButton setTripModal={setAddTripModal} />
     </>
   );
 };
