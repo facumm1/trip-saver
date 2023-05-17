@@ -6,7 +6,8 @@ const initialTripInfo = () => ({
   importe: '',
   desde: '',
   hacia: '',
-  fecha: '',
+  fecha: new Date(),
+  dateSelected: false,
 });
 
 export default initialTripInfo;

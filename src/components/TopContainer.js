@@ -18,12 +18,13 @@ export const TopContainer = ({userName}) => {
         </Text>
       </View>
 
-      <InputTripModal
-        tripModal={addTripModal}
-        setTripModal={setAddTripModal}
-        title="Añadir un viaje nuevo"
-        addTripFirestore
-      />
+      {addTripModal && (
+        <InputTripModal
+          modalTitle="Añadir un viaje nuevo"
+          addTripFirestore
+          setTripModal={setAddTripModal}
+        />
+      )}
 
       <AddTripButton setTripModal={setAddTripModal} />
     </>

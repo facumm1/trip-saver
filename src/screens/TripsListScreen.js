@@ -10,6 +10,7 @@ import {
 import {delFirestore, readFirestore} from '../helpers/firestoreActions';
 import buttonStyles from '../styles/buttonStyle';
 import InputTripModal from '../components/Modals/InputTripModal';
+import {mapSecondsToString} from '../helpers/mapDate';
 
 export const TripsListScreen = () => {
   const navigation = useNavigation();
@@ -31,6 +32,7 @@ export const TripsListScreen = () => {
         })
         .catch(console.error);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editedTrip.updated]);
 
@@ -59,6 +61,7 @@ export const TripsListScreen = () => {
         ) : (
           Object.values(trips).map(trip => (
             <View style={tripsScreenStyles.tripContainer} key={trip.id}>
+              {/* Data del viaje */}
               <View style={{marginHorizontal: 10}}>
                 <Text style={{fontSize: 20, fontWeight: '500'}}>
                   {trip.pasajero}
@@ -68,43 +71,64 @@ export const TripsListScreen = () => {
                 <Text style={{fontSize: 15}}>Hacia: {trip.hacia}</Text>
               </View>
 
-              <TouchableOpacity
-                onPress={() => {
-                  setUpdTripModal(prevStatus => !prevStatus);
-                  setEditedTrip(prev => ({...prev, id: trip.id}));
-                }}
-                style={tripsScreenStyles.tripDate}>
-                <Text
+              <Text style={tripsScreenStyles.tripDate}>
+                {mapSecondsToString(trip.fecha)}
+              </Text>
+
+              {/* Trip buttons */}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  position: 'absolute',
+                  bottom: 0,
+                  right: 0,
+                }}>
+                {/* Boton Editar */}
+                <TouchableOpacity
+                  onPress={() => {
+                    setUpdTripModal(prevStatus => !prevStatus);
+                    setEditedTrip(prev => ({...prev, id: trip.id}));
+                  }}
                   style={{
-                    fontWeight: 'bold',
-                    fontSize: 22,
+                    backgroundColor: '#1f3dff',
+                    marginHorizontal: 5,
+                    borderTopRightRadius: 10,
+                    borderTopLeftRadius: 10,
                   }}>
-                  {trip.fecha}
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={{
+                      color: '#fff',
+                      padding: 5,
+                      fontSize: 17,
+                    }}>
+                    Editar
+                  </Text>
+                </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => {
-                  delFirestore(trip.id);
-                  setTrips(prevTrips => {
-                    const tripsArray = Object.entries(prevTrips).filter(
-                      ([id]) => id !== trip.id,
-                    );
+                {/* Boton Borrar */}
+                <TouchableOpacity
+                  onPress={() => {
+                    delFirestore(trip.id);
+                    setTrips(prevTrips => {
+                      const tripsArray = Object.entries(prevTrips).filter(
+                        ([id]) => id !== trip.id,
+                      );
 
-                    return Object.fromEntries(tripsArray);
-                  });
-                }}
-                style={tripsScreenStyles.btnDel}>
-                <Text style={{fontSize: 17, color: '#fff', padding: 5}}>
-                  Borrar
-                </Text>
-              </TouchableOpacity>
+                      return Object.fromEntries(tripsArray);
+                    });
+                  }}
+                  style={tripsScreenStyles.btnDel}>
+                  <Text style={{fontSize: 17, color: '#fff', padding: 5}}>
+                    Borrar
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           ))
         )}
       </View>
 
-      {/* Buttons */}
+      {/* Screen buttons */}
       <TouchableOpacity
         style={buttonStyles.btn}
         onPress={() => navigation.navigate('MainScreen')}>
@@ -128,6 +152,7 @@ const tripsScreenStyles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 22,
     borderWidth: 1,
+    borderBottomLeftRadius: 10,
     alignSelf: 'flex-end',
     position: 'absolute',
     right: 0,
@@ -136,9 +161,6 @@ const tripsScreenStyles = StyleSheet.create({
   },
   btnDel: {
     backgroundColor: '#b32727',
-    position: 'absolute',
-    right: 0,
-    bottom: 0,
     borderTopLeftRadius: 10,
   },
 });
