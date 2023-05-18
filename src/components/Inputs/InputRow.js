@@ -3,12 +3,7 @@ import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import modalTripStyles from '../../styles/inputModalStyles';
 import {mapSecondsToString} from '../../helpers/mapDate';
 
-export const InputContainer = ({
-  tripInfo,
-  dateInfo = false,
-  setTripInfo,
-  setModalDate,
-}) => {
+const InputRow = ({tripInfo, dateInfo = false, setTripInfo, setModalDate}) => {
   const calcInputWidth = placeholder => {
     return placeholder === 'Pasajero' ? '50%' : '25%';
   };
@@ -18,7 +13,7 @@ export const InputContainer = ({
   };
 
   return (
-    <View style={modalTripStyles.inputContainer}>
+    <View style={modalTripStyles.inputRow}>
       {dateInfo && (
         <TouchableOpacity
           style={{...modalTripStyles.input, justifyContent: 'center'}}
@@ -52,3 +47,5 @@ export const InputContainer = ({
     </View>
   );
 };
+
+export default InputRow;

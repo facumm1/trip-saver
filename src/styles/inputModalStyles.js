@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 
 const modalTripStyles = StyleSheet.create({
-  inputContainer: {
+  inputRow: {
     flexDirection: 'row',
     marginVertical: 7.5,
   },

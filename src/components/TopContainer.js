@@ -8,13 +8,13 @@ export const TopContainer = ({userName}) => {
 
   return (
     <>
-      <View style={{borderWidth: 1}}>
+      <View>
         <Text style={topContainerStyles.appTitle}>Trip Saver</Text>
       </View>
 
-      <View style={{borderWidth: 1, paddingLeft: 20}}>
+      <View style={{borderWidth: 0.5, paddingLeft: 20}}>
         <Text style={{fontSize: 20, textAlign: 'center'}}>
-          Hola {userName}!
+          Hola, {userName}!
         </Text>
       </View>
 

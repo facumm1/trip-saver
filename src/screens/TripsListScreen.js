@@ -7,10 +7,10 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from 'react-native';
-import {delFirestore, readFirestore} from '../helpers/firestoreActions';
+import {readFirestore} from '../helpers/firestoreActions';
 import buttonStyles from '../styles/buttonStyle';
 import InputTripModal from '../components/Modals/InputTripModal';
-import {mapSecondsToString} from '../helpers/mapDate';
+import TripCard from '../components/Cards/TripCard';
 
 export const TripsListScreen = () => {
   const navigation = useNavigation();
@@ -60,70 +60,13 @@ export const TripsListScreen = () => {
           </View>
         ) : (
           Object.values(trips).map(trip => (
-            <View style={tripsScreenStyles.tripContainer} key={trip.id}>
-              {/* Data del viaje */}
-              <View style={{marginHorizontal: 10}}>
-                <Text style={{fontSize: 20, fontWeight: '500'}}>
-                  {trip.pasajero}
-                </Text>
-                <Text style={{fontSize: 15}}>Importe: ${trip.importe}</Text>
-                <Text style={{fontSize: 15}}>Desde: {trip.desde}</Text>
-                <Text style={{fontSize: 15}}>Hacia: {trip.hacia}</Text>
-              </View>
-
-              <Text style={tripsScreenStyles.tripDate}>
-                {mapSecondsToString(trip.fecha)}
-              </Text>
-
-              {/* Trip buttons */}
-              <View
-                style={{
-                  flexDirection: 'row',
-                  position: 'absolute',
-                  bottom: 0,
-                  right: 0,
-                }}>
-                {/* Boton Editar */}
-                <TouchableOpacity
-                  onPress={() => {
-                    setUpdTripModal(prevStatus => !prevStatus);
-                    setEditedTrip(prev => ({...prev, id: trip.id}));
-                  }}
-                  style={{
-                    backgroundColor: '#1f3dff',
-                    marginHorizontal: 5,
-                    borderTopRightRadius: 10,
-                    borderTopLeftRadius: 10,
-                  }}>
-                  <Text
-                    style={{
-                      color: '#fff',
-                      padding: 5,
-                      fontSize: 17,
-                    }}>
-                    Editar
-                  </Text>
-                </TouchableOpacity>
-
-                {/* Boton Borrar */}
-                <TouchableOpacity
-                  onPress={() => {
-                    delFirestore(trip.id);
-                    setTrips(prevTrips => {
-                      const tripsArray = Object.entries(prevTrips).filter(
-                        ([id]) => id !== trip.id,
-                      );
-
-                      return Object.fromEntries(tripsArray);
-                    });
-                  }}
-                  style={tripsScreenStyles.btnDel}>
-                  <Text style={{fontSize: 17, color: '#fff', padding: 5}}>
-                    Borrar
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            <TripCard
+              key={trip.id}
+              trip={trip}
+              setTrips={setTrips}
+              setUpdTripModal={setUpdTripModal}
+              setEditedTrip={setEditedTrip}
+            />
           ))
         )}
       </View>

@@ -75,7 +75,7 @@ const modalTripStyles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 10,
   },
-  inputContainer: {
+  inputRow: {
     flexDirection: 'row',
     marginVertical: 7.5,
   },

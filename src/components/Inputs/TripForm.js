@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {InputContainer} from './InputContainer';
+import InputRow from './InputRow';
 import {View} from 'react-native';
 import {mapDateToSeconds, mapSecondsToDate} from '../../helpers/mapDate';
 import DatePicker from 'react-native-date-picker';
@@ -29,7 +29,7 @@ const TripForm = ({tripInfo, setTripInfo, addTripFirestore}) => {
       />
 
       <View style={{alignItems: 'center'}}>
-        <InputContainer
+        <InputRow
           tripInfo={{
             pasajero: {
               value: tripInfo.pasajero,
@@ -43,7 +43,7 @@ const TripForm = ({tripInfo, setTripInfo, addTripFirestore}) => {
           setTripInfo={setTripInfo}
         />
 
-        <InputContainer
+        <InputRow
           tripInfo={{
             desde: {
               value: tripInfo.desde,
