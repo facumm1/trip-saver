@@ -1,7 +1,8 @@
 import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import buttonStyles from '../../styles/buttonStyle';
-import {add, cancel, modify} from '../../helpers/InputModalFunc';
+import {cancel, modify} from '../../helpers/InputModalFunc';
+import {validateTripProps} from '../../helpers/validateData';
 
 export const InputModalButton = ({
   btnTitle,
@@ -9,24 +10,8 @@ export const InputModalButton = ({
   setTripInfo,
   setTripModal,
   setEditedTrip,
+  setFormInvalid,
 }) => {
-  const validateTripProps = trip => {
-    console.log(tripInfo);
-
-    const {pasajero, importe, desde, hacia} = trip;
-
-    const isPasajeroValid = pasajero.length >= 3;
-    const isImporteValid = importe.length >= 3;
-    const isDesdeValid = desde.length >= 3;
-    const isHaciaValid = hacia.length >= 3;
-
-    if (isPasajeroValid && isImporteValid && isDesdeValid && isHaciaValid) {
-      console.log('Validas');
-    } else {
-      alert('Los valores deben tener mas de 3 caracteres o digitos');
-    }
-  };
-
   return (
     <TouchableOpacity
       style={{
@@ -37,8 +22,13 @@ export const InputModalButton = ({
       onPress={() => {
         switch (btnTitle) {
           case 'Añadir':
-            validateTripProps(tripInfo);
-            //add(setTripModal, tripInfo, setTripInfo);
+            validateTripProps(
+              tripInfo,
+              tripInfo,
+              setFormInvalid,
+              setTripModal,
+              setTripInfo,
+            );
             break;
           case 'Modificar':
             modify(setTripModal, tripInfo, setTripInfo, setEditedTrip);

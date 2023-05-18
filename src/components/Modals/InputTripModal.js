@@ -15,6 +15,7 @@ const InputTripModal = ({
   setEditedTrip,
 }) => {
   const [tripInfo, setTripInfo] = useState(tripSelected);
+  const [isFormInvalid, setFormInvalid] = useState(false);
 
   return (
     <Modal animationType="slide" transparent={true} visible={true}>
@@ -39,6 +40,7 @@ const InputTripModal = ({
               setTripInfo={setTripInfo}
               setTripModal={setTripModal}
               setEditedTrip={setEditedTrip}
+              setFormInvalid={setFormInvalid}
             />
 
             {/* Boton cancelar */}
@@ -48,8 +50,15 @@ const InputTripModal = ({
               setTripInfo={setTripInfo}
               setTripModal={setTripModal}
               setEditedTrip={setEditedTrip}
+              setFormInvalid={setFormInvalid}
             />
           </View>
+
+          {isFormInvalid && (
+            <Text style={modalTripStyles.warningLength}>
+              Todos los campos son requeridos y deben tener 3 carácteres o más.
+            </Text>
+          )}
         </View>
       </View>
     </Modal>
@@ -90,6 +99,13 @@ const modalTripStyles = StyleSheet.create({
     alignSelf: 'center',
     paddingVertical: 10,
     marginTop: 5,
+  },
+  warningLength: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    color: '#ff4336',
+    textAlign: 'center',
+    marginTop: 10,
   },
 });
 
