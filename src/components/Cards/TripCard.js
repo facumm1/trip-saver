@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {mapSecondsToString} from '../../helpers/mapDate';
-import {delFirestore} from '../../helpers/firestoreActions';
+import {delFirestore} from '../../firebase/firestoreActions';
 
 const TripCard = ({trip, setTrips, setUpdTripModal, setEditedTrip}) => {
   return (

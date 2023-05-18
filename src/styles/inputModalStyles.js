@@ -9,7 +9,8 @@ const modalTripStyles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 7.5,
     width: '25%',
-    textAlign: 'center',
+    textAlign: 'left',
+    paddingLeft: 20,
     marginHorizontal: 5,
   },
   btnContainer: {

@@ -12,13 +12,17 @@ const InputRow = ({tripInfo, dateInfo = false, setTripInfo, setModalDate}) => {
     return str[0].toLowerCase() + str.slice(1);
   };
 
+  const selectDataType = type => {
+    return type === 'Importe' ? 'numeric' : 'default';
+  };
+
   return (
     <View style={modalTripStyles.inputRow}>
       {dateInfo && (
         <TouchableOpacity
           style={{...modalTripStyles.input, justifyContent: 'center'}}
           onPress={() => setModalDate(true)}>
-          <Text style={{textAlign: 'center'}}>
+          <Text style={{textAlign: 'left'}}>
             {dateInfo.seconds ? mapSecondsToString(dateInfo) : 'Fecha'}
           </Text>
         </TouchableOpacity>
@@ -30,7 +34,6 @@ const InputRow = ({tripInfo, dateInfo = false, setTripInfo, setModalDate}) => {
           style={{
             ...modalTripStyles.input,
             width: calcInputWidth(tripData.placeholder),
-            marginRight: 5,
           }}
           placeholder={tripData.placeholder}
           onChangeText={val =>
@@ -42,6 +45,7 @@ const InputRow = ({tripInfo, dateInfo = false, setTripInfo, setModalDate}) => {
             })
           }
           value={tripData.value}
+          keyboardType={selectDataType(tripData.placeholder)}
         />
       ))}
     </View>

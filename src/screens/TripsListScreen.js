@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from 'react-native';
-import {readFirestore} from '../helpers/firestoreActions';
+import {readFirestore} from '../firebase/firestoreActions';
 import buttonStyles from '../styles/buttonStyle';
 import InputTripModal from '../components/Modals/InputTripModal';
 import TripCard from '../components/Cards/TripCard';

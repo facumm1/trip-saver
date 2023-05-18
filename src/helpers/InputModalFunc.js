@@ -1,4 +1,4 @@
-import {updateFireStore, writeFirestore} from './firestoreActions';
+import {updateFireStore, writeFirestore} from '../firebase/firestoreActions';
 import initialTripInfo from './initialTripInfo';
 
 export const add = (setTripModal, tripInfo, setTripInfo) => {
