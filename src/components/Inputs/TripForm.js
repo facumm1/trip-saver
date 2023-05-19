@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import InputRow from './InputRow';
 import {View} from 'react-native';
 import {mapDateToSeconds, mapSecondsToDate} from '../../helpers/mapDate';
 import DatePicker from 'react-native-date-picker';
+import {TripInfoContext} from '../../store/TripInfoContext';
 
-const TripForm = ({tripInfo, setTripInfo, addTripFirestore}) => {
+const TripForm = ({addTripFirestore}) => {
   const [modalDatePicker, setModalDate] = useState(false);
+  const {tripInfo, setTripInfo} = useContext(TripInfoContext);
 
   return (
     <>

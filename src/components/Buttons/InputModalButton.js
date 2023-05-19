@@ -1,17 +1,18 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import buttonStyles from '../../styles/buttonStyle';
 import {cancel, modify} from '../../helpers/InputModalFunc';
 import {validateTripProps} from '../../helpers/validateData';
+import {TripInfoContext} from '../../store/TripInfoContext';
 
 export const InputModalButton = ({
   btnTitle,
-  tripInfo,
-  setTripInfo,
   setTripModal,
   setEditedTrip,
   setFormInvalid,
 }) => {
+  const {tripInfo, setTripInfo} = useContext(TripInfoContext);
+
   return (
     <TouchableOpacity
       style={{
