@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import InputRow from './InputRow';
 import {View} from 'react-native';
 import {mapDateToSeconds, mapSecondsToDate} from '../../helpers/mapDate';
@@ -9,13 +9,20 @@ const TripForm = ({addTripFirestore}) => {
   const [modalDatePicker, setModalDate] = useState(false);
   const {tripInfo, setTripInfo} = useContext(TripInfoContext);
 
+  useEffect(() => {
+    console.log('tripInfo', tripInfo);
+    console.log(
+      addTripFirestore ? new Date() : mapSecondsToDate(tripInfo.fecha),
+    );
+  }, []);
+
   return (
     <>
       {/* Pick date modal */}
       <DatePicker
         modal
         open={modalDatePicker}
-        date={addTripFirestore ? new Date() : mapSecondsToDate(tripInfo.fecha)}
+        date={new Date()}
         onConfirm={date => {
           setTripInfo(prevTripInfo => ({
             ...prevTripInfo,

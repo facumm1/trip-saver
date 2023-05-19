@@ -45,7 +45,7 @@ export const TripsListScreen = () => {
       {updTripModal && (
         <InputTripModal
           tripModal={updTripModal}
-          tripSelected={trips[editedTrip.id]}
+          tripFromDB={trips[editedTrip.id]}
           title="Modificar datos del viaje"
           setTripModal={setUpdTripModal}
           setEditedTrip={setEditedTrip}

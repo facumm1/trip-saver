@@ -1,25 +1,14 @@
 import React, {useState} from 'react';
 import {Modal, Text, View} from 'react-native';
-import initialTripInfo from '../../helpers/initialTripInfo';
 import TripForm from '../Inputs/TripForm';
 import {InputModalButton} from '../Buttons/InputModalButton';
 import modalTripStyles from '../../styles/inputModalStyles';
-import {TripInfoContext} from '../../store/TripInfoContext';
-
-const TripInfoProvider = ({children}) => {
-  const [tripInfo, setTripInfo] = useState(initialTripInfo());
-
-  return (
-    <TripInfoContext.Provider value={{tripInfo, setTripInfo}}>
-      {children}
-    </TripInfoContext.Provider>
-  );
-};
+import TripInfoProvider from '../../store/TripInfoProvider';
 
 const InputTripModal = ({
   modalTitle,
   addTripFirestore = false,
-  //tripSelected = initialTripInfo(),
+  tripFromDB = false,
   setTripModal,
   setEditedTrip, //Prop only for updating trip
 }) => {
@@ -32,7 +21,7 @@ const InputTripModal = ({
           {/* Title */}
           <Text style={modalTripStyles.title}>{modalTitle}</Text>
 
-          <TripInfoProvider>
+          <TripInfoProvider tripFromDB={tripFromDB}>
             {/* Inputs */}
             <TripForm addTripFirestore={addTripFirestore} />
 
