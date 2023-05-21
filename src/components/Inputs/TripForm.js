@@ -1,40 +1,21 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import InputRow from './InputRow';
 import {View} from 'react-native';
-import {mapDateToSeconds, mapSecondsToDate} from '../../helpers/mapDate';
-import DatePicker from 'react-native-date-picker';
 import {TripInfoContext} from '../../store/TripInfoContext';
+import {InputModalButton} from '../Buttons/InputModalButton';
+import modalTripStyles from '../../styles/inputModalStyles';
+import ModalDatePicker from '../Picker/ModalDatePicker';
 
-const TripForm = ({addTripFirestore}) => {
+const TripForm = () => {
   const [modalDatePicker, setModalDate] = useState(false);
-  const {tripInfo, setTripInfo} = useContext(TripInfoContext);
-
-  useEffect(() => {
-    console.log('tripInfo', tripInfo);
-    console.log(
-      addTripFirestore ? new Date() : mapSecondsToDate(tripInfo.fecha),
-    );
-  }, []);
+  const {tripInfo, addTripFirestore} = useContext(TripInfoContext);
 
   return (
     <>
       {/* Pick date modal */}
-      <DatePicker
-        modal
-        open={modalDatePicker}
-        date={new Date()}
-        onConfirm={date => {
-          setTripInfo(prevTripInfo => ({
-            ...prevTripInfo,
-            fecha: mapDateToSeconds(date),
-            dateSelected: true,
-          }));
-
-          setModalDate(false);
-        }}
-        onCancel={() => {
-          setModalDate(false);
-        }}
+      <ModalDatePicker
+        modalDatePicker={modalDatePicker}
+        setModalDate={setModalDate}
       />
 
       <View style={{alignItems: 'center'}}>
@@ -49,7 +30,7 @@ const TripForm = ({addTripFirestore}) => {
               placeholder: 'Importe',
             },
           }}
-          setTripInfo={setTripInfo}
+          setModalDate={setModalDate}
         />
 
         <InputRow
@@ -64,9 +45,19 @@ const TripForm = ({addTripFirestore}) => {
             },
           }}
           dateInfo={tripInfo.fecha}
-          setTripInfo={setTripInfo}
           setModalDate={setModalDate}
         />
+      </View>
+
+      {/* Buttons */}
+      <View style={modalTripStyles.btnContainer}>
+        {/* Boton modificar/añadir */}
+        <InputModalButton
+          btnTitle={addTripFirestore ? 'Añadir' : 'Modificar'}
+        />
+
+        {/* Boton cancelar */}
+        <InputModalButton btnTitle="Cancelar" />
       </View>
     </>
   );

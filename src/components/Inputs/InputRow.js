@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import modalTripStyles from '../../styles/inputModalStyles';
 import {mapSecondsToString} from '../../helpers/mapDate';
+import {TripInfoContext} from '../../store/TripInfoContext';
 
-const InputRow = ({tripInfo, dateInfo = false, setTripInfo, setModalDate}) => {
+const InputRow = ({tripInfo, setModalDate, dateInfo = false}) => {
+  const {setTripInfo} = useContext(TripInfoContext);
+
   const calcInputWidth = placeholder => {
     return placeholder === 'Pasajero' ? '50%' : '25%';
   };

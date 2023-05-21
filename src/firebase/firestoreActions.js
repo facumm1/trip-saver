@@ -14,16 +14,12 @@ export const readFirestore = async () => {
 
 export const writeFirestore = async tripInfo => {
   try {
-    const {fecha, importe, hacia, desde, pasajero, id} = tripInfo;
-
-    await firestore().collection('viajes').doc(id).set({
-      id,
-      desde,
-      hacia,
-      fecha,
-      pasajero,
-      importe,
-    });
+    await firestore()
+      .collection('viajes')
+      .doc(tripInfo.id)
+      .set({
+        ...tripInfo,
+      });
     console.log('Adding new trip...');
   } catch (err) {
     console.error('writeFirestore error:', err);

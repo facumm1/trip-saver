@@ -6,7 +6,12 @@ export const mapSecondsToString = dateTrip => {
 
 export const mapSecondsToDate = secondsValue => {
   const fecha = new Date();
-  fecha.setTime(secondsValue.seconds * 1000);
+
+  if (secondsValue.seconds) {
+    fecha.setTime(secondsValue.seconds * 1000);
+  } else {
+    fecha.setTime(secondsValue);
+  }
 
   return fecha;
 };

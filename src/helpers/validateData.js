@@ -1,13 +1,12 @@
 import {add} from './InputModalFunc';
 
 export const validateTripProps = (
-  trip,
   tripInfo,
   setFormInvalid,
   setTripModal,
   setTripInfo,
 ) => {
-  const {pasajero, importe, desde, hacia} = trip;
+  const {pasajero, importe, desde, hacia} = tripInfo;
 
   const isPasajeroValid = pasajero.length >= 3;
   const isImporteValid = importe.length >= 3;

@@ -5,13 +5,9 @@ import {cancel, modify} from '../../helpers/InputModalFunc';
 import {validateTripProps} from '../../helpers/validateData';
 import {TripInfoContext} from '../../store/TripInfoContext';
 
-export const InputModalButton = ({
-  btnTitle,
-  setTripModal,
-  setEditedTrip,
-  setFormInvalid,
-}) => {
-  const {tripInfo, setTripInfo} = useContext(TripInfoContext);
+export const InputModalButton = ({btnTitle}) => {
+  const {tripInfo, setTripInfo, setFormInvalid, setTripModal, setEditedTrip} =
+    useContext(TripInfoContext);
 
   return (
     <TouchableOpacity
@@ -24,7 +20,6 @@ export const InputModalButton = ({
         switch (btnTitle) {
           case 'Añadir':
             validateTripProps(
-              tripInfo,
               tripInfo,
               setFormInvalid,
               setTripModal,

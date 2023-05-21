@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Modal, Text, View} from 'react-native';
 import TripForm from '../Inputs/TripForm';
-import {InputModalButton} from '../Buttons/InputModalButton';
 import modalTripStyles from '../../styles/inputModalStyles';
 import TripInfoProvider from '../../store/TripInfoProvider';
 
@@ -21,28 +20,14 @@ const InputTripModal = ({
           {/* Title */}
           <Text style={modalTripStyles.title}>{modalTitle}</Text>
 
-          <TripInfoProvider tripFromDB={tripFromDB}>
+          <TripInfoProvider
+            tripFromDB={tripFromDB}
+            setFormInvalid={setFormInvalid}
+            setTripModal={setTripModal}
+            setEditedTrip={setEditedTrip}
+            addTripFirestore={addTripFirestore}>
             {/* Inputs */}
-            <TripForm addTripFirestore={addTripFirestore} />
-
-            {/* Buttons */}
-            <View style={modalTripStyles.btnContainer}>
-              {/* Boton modificar/añadir */}
-              <InputModalButton
-                btnTitle={addTripFirestore ? 'Añadir' : 'Modificar'}
-                setTripModal={setTripModal}
-                setEditedTrip={setEditedTrip}
-                setFormInvalid={setFormInvalid}
-              />
-
-              {/* Boton cancelar */}
-              <InputModalButton
-                btnTitle="Cancelar"
-                setTripModal={setTripModal}
-                setEditedTrip={setEditedTrip}
-                setFormInvalid={setFormInvalid}
-              />
-            </View>
+            <TripForm />
           </TripInfoProvider>
 
           {isFormInvalid && (

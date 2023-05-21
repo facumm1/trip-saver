@@ -3,7 +3,14 @@ import {useEffect, useState} from 'react';
 import initialTripInfo from '../helpers/initialTripInfo';
 import {TripInfoContext} from './TripInfoContext';
 
-const TripInfoProvider = ({children, tripFromDB}) => {
+const TripInfoProvider = ({
+  children,
+  tripFromDB,
+  addTripFirestore,
+  setFormInvalid,
+  setTripModal,
+  setEditedTrip,
+}) => {
   const [tripInfo, setTripInfo] = useState(initialTripInfo());
 
   useEffect(() => {
@@ -13,7 +20,15 @@ const TripInfoProvider = ({children, tripFromDB}) => {
   }, [tripFromDB]);
 
   return (
-    <TripInfoContext.Provider value={{tripInfo, setTripInfo}}>
+    <TripInfoContext.Provider
+      value={{
+        tripInfo,
+        addTripFirestore,
+        setTripInfo,
+        setFormInvalid,
+        setTripModal,
+        setEditedTrip,
+      }}>
       {children}
     </TripInfoContext.Provider>
   );
