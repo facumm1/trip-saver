@@ -1,22 +1,29 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import modalTripStyles from '../../styles/inputModalStyles';
 import {mapSecondsToString} from '../../helpers/mapDate';
-import {TripInfoContext} from '../../store/TripInfoContext';
+import {TripInfoContext} from '../../context/TripInfoContext';
 
 const InputRow = ({tripInfo, setModalDate, dateInfo = false}) => {
   const {setTripInfo} = useContext(TripInfoContext);
 
-  const calcInputWidth = placeholder => {
+  const calcInputWidth = useMemo(placeholder => {
     return placeholder === 'Pasajero' ? '50%' : '25%';
-  };
+  }, []);
 
-  const mapPropName = str => {
+  const mapPropName = useMemo(str => {
     return str[0].toLowerCase() + str.slice(1);
-  };
+  }, []);
 
-  const selectDataType = type => {
+  const selectDataType = useMemo(type => {
     return type === 'Importe' ? 'numeric' : 'default';
+  }, []);
+
+  const handleInputChange = (placeholder, val) => {
+    setTripInfo(prevTripInfo => ({
+      ...prevTripInfo,
+      [mapPropName(placeholder)]: val,
+    }));
   };
 
   return (
@@ -39,14 +46,7 @@ const InputRow = ({tripInfo, setModalDate, dateInfo = false}) => {
             width: calcInputWidth(tripData.placeholder),
           }}
           placeholder={tripData.placeholder}
-          onChangeText={val =>
-            setTripInfo(prevTripInfo => {
-              return {
-                ...prevTripInfo,
-                [mapPropName(tripData.placeholder)]: val,
-              };
-            })
-          }
+          onChangeText={val => handleInputChange(tripData.placeholder, val)}
           value={tripData.value}
           keyboardType={selectDataType(tripData.placeholder)}
         />

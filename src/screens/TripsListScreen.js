@@ -1,16 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {readFirestore} from '../firebase/firestoreActions';
 import buttonStyles from '../styles/buttonStyle';
 import InputTripModal from '../components/Modals/InputTripModal';
 import TripCard from '../components/Cards/TripCard';
+import tripsScreenStyles from '../styles/tripsScreenStyles';
 
 export const TripsListScreen = () => {
   const navigation = useNavigation();
@@ -80,30 +75,3 @@ export const TripsListScreen = () => {
     </View>
   );
 };
-
-const tripsScreenStyles = StyleSheet.create({
-  title: {textAlign: 'center', fontSize: 25, fontWeight: 'bold'},
-  tripContainer: {
-    margin: 5,
-    width: '75%',
-    borderWidth: 1,
-    borderRadius: 15,
-    flexDirection: 'row',
-    overflow: 'hidden',
-  },
-  tripDate: {
-    fontWeight: 'bold',
-    fontSize: 22,
-    borderWidth: 1,
-    borderBottomLeftRadius: 10,
-    alignSelf: 'flex-end',
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    padding: 5,
-  },
-  btnDel: {
-    backgroundColor: '#b32727',
-    borderTopLeftRadius: 10,
-  },
-});

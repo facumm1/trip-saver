@@ -1,36 +1,41 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {mapDateToSeconds, mapSecondsToDate} from '../../helpers/mapDate';
-import {TripInfoContext} from '../../store/TripInfoContext';
+import {TripInfoContext} from '../../context/TripInfoContext';
 import DatePicker from 'react-native-date-picker';
 
 const ModalDatePicker = ({modalDatePicker, setModalDate}) => {
   const {tripInfo, setTripInfo} = useContext(TripInfoContext);
 
-  const checkTripFromDB = () => {
+  const checkTripFromDB = useMemo(() => {
     if (tripInfo.fecha.seconds) {
       return mapSecondsToDate(tripInfo.fecha);
     }
     return new Date();
+  }, [tripInfo.fecha]);
+
+  const handleConfirm = date => {
+    console.log('Date Selected: ', date);
+
+    setTripInfo(prevTripInfo => ({
+      ...prevTripInfo,
+      fecha: mapDateToSeconds(date),
+      dateSelected: true,
+    }));
+
+    handleCancel();
+  };
+
+  const handleCancel = () => {
+    setModalDate(false);
   };
 
   return (
     <DatePicker
       modal
       open={modalDatePicker}
-      date={checkTripFromDB()}
-      onConfirm={date => {
-        console.log('date', date);
-        setTripInfo(prevTripInfo => ({
-          ...prevTripInfo,
-          fecha: mapDateToSeconds(date),
-          dateSelected: true,
-        }));
-
-        setModalDate(false);
-      }}
-      onCancel={() => {
-        setModalDate(false);
-      }}
+      date={checkTripFromDB}
+      onConfirm={handleConfirm}
+      onCancel={handleCancel}
     />
   );
 };

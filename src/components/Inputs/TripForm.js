@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import InputRow from './InputRow';
 import {View} from 'react-native';
-import {TripInfoContext} from '../../store/TripInfoContext';
+import {TripInfoContext} from '../../context/TripInfoContext';
 import {InputModalButton} from '../Buttons/InputModalButton';
 import modalTripStyles from '../../styles/inputModalStyles';
 import ModalDatePicker from '../Picker/ModalDatePicker';

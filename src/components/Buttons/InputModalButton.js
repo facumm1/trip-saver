@@ -3,7 +3,7 @@ import {Text, TouchableOpacity} from 'react-native';
 import buttonStyles from '../../styles/buttonStyle';
 import {cancel, modify} from '../../helpers/InputModalFunc';
 import {validateTripProps} from '../../helpers/validateData';
-import {TripInfoContext} from '../../store/TripInfoContext';
+import {TripInfoContext} from '../../context/TripInfoContext';
 
 export const InputModalButton = ({btnTitle}) => {
   const {tripInfo, setTripInfo, setFormInvalid, setTripModal, setEditedTrip} =

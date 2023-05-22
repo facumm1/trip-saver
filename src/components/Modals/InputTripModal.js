@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Modal, Text, View} from 'react-native';
 import TripForm from '../Inputs/TripForm';
 import modalTripStyles from '../../styles/inputModalStyles';
-import TripInfoProvider from '../../store/TripInfoProvider';
+import TripInfoProvider from '../../context/TripInfoProvider';
 
 const InputTripModal = ({
   modalTitle,
