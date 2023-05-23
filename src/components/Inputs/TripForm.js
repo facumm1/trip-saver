@@ -5,14 +5,19 @@ import {TripInfoContext} from '../../context/TripInfoContext';
 import {InputModalButton} from '../Buttons/InputModalButton';
 import modalTripStyles from '../../styles/inputModalStyles';
 import ModalDatePicker from '../Picker/ModalDatePicker';
+import useTripActions from '../../hooks/useTripsActions';
 
 const TripForm = () => {
   const {tripInfo, addTripFirestore} = useContext(TripInfoContext);
+  const {modalDatePicker, setModalDate} = useTripActions();
 
   return (
     <>
       {/* Pick date modal */}
-      <ModalDatePicker />
+      <ModalDatePicker
+        modalDatePicker={modalDatePicker}
+        setModalDate={setModalDate}
+      />
 
       <View style={{alignItems: 'center'}}>
         <InputRow
@@ -26,6 +31,7 @@ const TripForm = () => {
               placeholder: 'Importe',
             },
           }}
+          setModalDate={setModalDate}
         />
 
         <InputRow
@@ -40,6 +46,7 @@ const TripForm = () => {
             },
           }}
           dateInfo={tripInfo.fecha}
+          setModalDate={setModalDate}
         />
       </View>
 

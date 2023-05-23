@@ -3,11 +3,9 @@ import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import modalTripStyles from '../../styles/inputModalStyles';
 import {mapSecondsToString} from '../../helpers/mapDate';
 import {TripInfoContext} from '../../context/TripInfoContext';
-import useTripActions from '../../hooks/useTripsActions';
 
-const InputRow = ({tripInfo, dateInfo = false}) => {
+const InputRow = ({setModalDate, tripInfo, dateInfo = false}) => {
   const {setTripInfo} = useContext(TripInfoContext);
-  const {setModalDate} = useTripActions();
 
   const calcInputWidth = useMemo(() => {
     return placeholder => (placeholder === 'Pasajero' ? '50%' : '25%');
