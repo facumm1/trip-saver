@@ -32,7 +32,11 @@ export const TripCardContainer = ({
     />
   );
 
-  React.useEffect(() => console.log(JSON.stringify(trips, null, 3)), []);
+  const sortTrips = () => {
+    return Object.values(trips).sort(
+      (a, b) => b.fecha.seconds - a.fecha.seconds,
+    );
+  };
 
   return (
     <View style={{borderWidth: 0, height: height - 140}}>
@@ -44,7 +48,7 @@ export const TripCardContainer = ({
         <>
           <TripSeparator />
           <FlatList
-            data={Object.values(trips)}
+            data={sortTrips()}
             renderItem={renderTripCard}
             keyExtractor={keyExtractor}
             ItemSeparatorComponent={TripSeparator}
