@@ -3,20 +3,22 @@ import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import modalTripStyles from '../../styles/inputModalStyles';
 import {mapSecondsToString} from '../../helpers/mapDate';
 import {TripInfoContext} from '../../context/TripInfoContext';
+import useTripActions from '../../hooks/useTripsActions';
 
-const InputRow = ({tripInfo, setModalDate, dateInfo = false}) => {
+const InputRow = ({tripInfo, dateInfo = false}) => {
   const {setTripInfo} = useContext(TripInfoContext);
+  const {setModalDate} = useTripActions();
 
-  const calcInputWidth = useMemo(placeholder => {
-    return placeholder === 'Pasajero' ? '50%' : '25%';
+  const calcInputWidth = useMemo(() => {
+    return placeholder => (placeholder === 'Pasajero' ? '50%' : '25%');
   }, []);
 
-  const mapPropName = useMemo(str => {
-    return str[0].toLowerCase() + str.slice(1);
+  const mapPropName = useMemo(() => {
+    return str => str[0].toLowerCase() + str.slice(1);
   }, []);
 
-  const selectDataType = useMemo(type => {
-    return type === 'Importe' ? 'numeric' : 'default';
+  const selectDataType = useMemo(() => {
+    return type => (type === 'Importe' ? 'numeric' : 'default');
   }, []);
 
   const handleInputChange = (placeholder, val) => {

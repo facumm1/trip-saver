@@ -2,9 +2,11 @@ import React, {useContext, useMemo} from 'react';
 import {mapDateToSeconds, mapSecondsToDate} from '../../helpers/mapDate';
 import {TripInfoContext} from '../../context/TripInfoContext';
 import DatePicker from 'react-native-date-picker';
+import useTripActions from '../../hooks/useTripsActions';
 
-const ModalDatePicker = ({modalDatePicker, setModalDate}) => {
+const ModalDatePicker = () => {
   const {tripInfo, setTripInfo} = useContext(TripInfoContext);
+  const {modalDatePicker, setModalDate} = useTripActions();
 
   const checkTripFromDB = useMemo(() => {
     if (tripInfo.fecha.seconds) {

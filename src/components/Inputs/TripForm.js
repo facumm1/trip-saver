@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import InputRow from './InputRow';
 import {View} from 'react-native';
 import {TripInfoContext} from '../../context/TripInfoContext';
@@ -7,16 +7,12 @@ import modalTripStyles from '../../styles/inputModalStyles';
 import ModalDatePicker from '../Picker/ModalDatePicker';
 
 const TripForm = () => {
-  const [modalDatePicker, setModalDate] = useState(false);
   const {tripInfo, addTripFirestore} = useContext(TripInfoContext);
 
   return (
     <>
       {/* Pick date modal */}
-      <ModalDatePicker
-        modalDatePicker={modalDatePicker}
-        setModalDate={setModalDate}
-      />
+      <ModalDatePicker />
 
       <View style={{alignItems: 'center'}}>
         <InputRow
@@ -30,7 +26,6 @@ const TripForm = () => {
               placeholder: 'Importe',
             },
           }}
-          setModalDate={setModalDate}
         />
 
         <InputRow
@@ -45,7 +40,6 @@ const TripForm = () => {
             },
           }}
           dateInfo={tripInfo.fecha}
-          setModalDate={setModalDate}
         />
       </View>
 
