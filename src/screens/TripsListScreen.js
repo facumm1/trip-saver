@@ -62,7 +62,7 @@ export const TripsListScreen = () => {
 
       {/* Screen buttons */}
       <TouchableOpacity
-        style={buttonStyles.btn}
+        style={{...buttonStyles.btn, marginVertical: 7.5}}
         onPress={() => navigation.navigate('MainScreen')}>
         <Text style={buttonStyles.textBtn}>Volver</Text>
       </TouchableOpacity>

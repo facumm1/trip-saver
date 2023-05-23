@@ -1,6 +1,8 @@
 import React from 'react';
-import {ActivityIndicator, View} from 'react-native';
+import {ActivityIndicator, Dimensions, FlatList, View} from 'react-native';
 import TripCard from './TripCard';
+
+const {width, height} = Dimensions.get('window');
 
 export const TripCardContainer = ({
   isLoading,
@@ -9,22 +11,46 @@ export const TripCardContainer = ({
   setUpdTripModal,
   setEditedTrip,
 }) => {
+  const renderTripCard = ({item}) => (
+    <TripCard
+      key={item.id}
+      trip={item}
+      setTrips={setTrips}
+      setUpdTripModal={setUpdTripModal}
+      setEditedTrip={setEditedTrip}
+    />
+  );
+
+  const keyExtractor = item => item.id;
+
+  const TripSeparator = () => (
+    <View
+      style={{
+        height: 1.5,
+        backgroundColor: '#000',
+      }}
+    />
+  );
+
+  React.useEffect(() => console.log(JSON.stringify(trips, null, 3)), []);
+
   return (
-    <View style={{alignItems: 'center'}}>
+    <View style={{borderWidth: 0, height: height - 140}}>
       {isLoading ? (
-        <View style={{paddingVertical: 50, width: '100%'}}>
+        <View style={{paddingVertical: 50, width}}>
           <ActivityIndicator size="large" color="#000" />
         </View>
       ) : (
-        Object.values(trips).map(trip => (
-          <TripCard
-            key={trip.id}
-            trip={trip}
-            setTrips={setTrips}
-            setUpdTripModal={setUpdTripModal}
-            setEditedTrip={setEditedTrip}
+        <>
+          <TripSeparator />
+          <FlatList
+            data={Object.values(trips)}
+            renderItem={renderTripCard}
+            keyExtractor={keyExtractor}
+            ItemSeparatorComponent={TripSeparator}
           />
-        ))
+          <TripSeparator />
+        </>
       )}
     </View>
   );
