@@ -1,12 +1,12 @@
 const buttonStyles = {
   btn: {
-    backgroundColor: 'gray',
+    backgroundColor: '#fff',
     width: '40%',
     borderRadius: 30,
     alignSelf: 'center',
   },
   textBtn: {
-    color: '#fff',
+    color: '#000',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 20,

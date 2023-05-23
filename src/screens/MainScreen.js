@@ -9,7 +9,7 @@ const MainScreen = () => {
     <SafeAreaView>
       <StatusBar barStyle={'light-content'} />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View>
+        <View style={{flexDirection: 'column', backgroundColor: '#000'}}>
           <TopContainer userName="Jose Luis" />
           <BottomContainer />
         </View>
