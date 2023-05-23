@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {readFirestore} from '../firebase/firestoreActions';
 import buttonStyles from '../styles/buttonStyle';
 import InputTripModal from '../components/Modals/InputTripModal';
-import TripCard from '../components/Cards/TripCard';
 import tripsScreenStyles from '../styles/tripsScreenStyles';
+import {TripCardContainer} from '../components/Cards/TripCardContainer';
 
 export const TripsListScreen = () => {
   const navigation = useNavigation();
@@ -14,18 +14,22 @@ export const TripsListScreen = () => {
   const [updTripModal, setUpdTripModal] = useState(false);
   const [editedTrip, setEditedTrip] = useState({id: '', updated: false});
 
+  const readTripsData = () => {
+    setEditedTrip(prev => ({...prev, updated: false}));
+
+    readFirestore()
+      .then(res => {
+        res.forEach(trip =>
+          setTrips(prev => ({...prev, [trip.data().id]: trip.data()})),
+        );
+        setIsLoading(false);
+      })
+      .catch(console.error);
+  };
+
   useEffect(() => {
     if (isLoading || editedTrip.updated) {
-      setEditedTrip(prev => ({...prev, updated: false}));
-
-      readFirestore()
-        .then(res => {
-          res.forEach(trip =>
-            setTrips(prev => ({...prev, [trip.data().id]: trip.data()})),
-          );
-          setIsLoading(false);
-        })
-        .catch(console.error);
+      readTripsData();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,23 +52,13 @@ export const TripsListScreen = () => {
       )}
 
       {/* Trips */}
-      <View style={{alignItems: 'center'}}>
-        {isLoading ? (
-          <View style={{paddingVertical: 50, width: '100%'}}>
-            <ActivityIndicator size="large" color="#000" />
-          </View>
-        ) : (
-          Object.values(trips).map(trip => (
-            <TripCard
-              key={trip.id}
-              trip={trip}
-              setTrips={setTrips}
-              setUpdTripModal={setUpdTripModal}
-              setEditedTrip={setEditedTrip}
-            />
-          ))
-        )}
-      </View>
+      <TripCardContainer
+        isLoading={isLoading}
+        trips={trips}
+        setTrips={setTrips}
+        setUpdTripModal={setUpdTripModal}
+        setEditedTrip={setEditedTrip}
+      />
 
       {/* Screen buttons */}
       <TouchableOpacity
