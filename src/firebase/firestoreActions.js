@@ -14,12 +14,12 @@ export const readFirestore = async () => {
 
 export const writeFirestore = async tripInfo => {
   try {
+    const {id, pasajero, importe, desde, hacia, fecha} = tripInfo;
+
     await firestore()
       .collection('viajes')
       .doc(tripInfo.id)
-      .set({
-        ...tripInfo,
-      });
+      .set({id, pasajero, importe, desde, hacia, fecha});
     console.log('Adding new trip...');
   } catch (err) {
     console.error('writeFirestore error:', err);
@@ -37,11 +37,13 @@ export const delFirestore = async tripId => {
 };
 
 export const updateFireStore = async tripInfo => {
+  const {id, pasajero, importe, desde, hacia, fecha} = tripInfo;
+
   try {
     await firestore()
       .collection('viajes')
       .doc(tripInfo.id)
-      .update(tripInfo)
+      .update({id, pasajero, importe, desde, hacia, fecha})
       .then(() => {
         console.log('Updating user...');
       });
