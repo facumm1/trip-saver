@@ -3,9 +3,10 @@ import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import {AddTripButton} from '../Buttons/AddTripButton';
 import FirestoreContext from '../../context/Firestore/FirestoreContext';
 
-export const TripCounter = ({setAddTripModal}) => {
+export const TripCounter = () => {
   const {trips, isDataLoading} = useContext(FirestoreContext);
-
+  //TODO agregar un refresher para el contador de viajes realizados
+  //TODO agregar filtro de viajes esta semana/dia/mes
   return (
     <View>
       <Text style={tripCounterStyles.title}>Viajes realizados</Text>
@@ -20,7 +21,7 @@ export const TripCounter = ({setAddTripModal}) => {
           {Object.keys(trips).length}
         </Text>
       )}
-      <AddTripButton setTripModal={setAddTripModal} />
+      <AddTripButton />
     </View>
   );
 };

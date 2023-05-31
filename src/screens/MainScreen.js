@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TopContainer} from '../components/TopContainer';
 import {
   View,
@@ -12,13 +12,16 @@ import {BottomContainer} from '../components/BottomContainer';
 import FirestoreProvider from '../context/Firestore/FirestoreProvider';
 
 const MainScreen = () => {
+  const [addTripModal, setAddTripModal] = useState(false);
+  //TODO refactor para evitar states en componentes padres
+
   return (
     <SafeAreaView>
       <StatusBar barStyle={'light-content'} />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={mainScreenStyles.container}>
-          <FirestoreProvider>
-            <TopContainer userName="Jose Luis" />
+          <FirestoreProvider setTripModal={setAddTripModal}>
+            <TopContainer userName="Jose Luis" addTripModal={addTripModal} />
             <BottomContainer />
           </FirestoreProvider>
         </View>

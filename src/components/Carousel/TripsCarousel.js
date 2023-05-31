@@ -16,7 +16,7 @@ const CarouselCard = ({pasajero, importe, desde, hacia, fecha}) => {
   return (
     <View style={tripCarouselStyles.cardContainer}>
       <Text style={tripCarouselStyles.passengerText}>{pasajero}</Text>
-      <Text>Importe: {importe}</Text>
+      <Text>Importe: ${importe}</Text>
       <Text>Desde: {desde}</Text>
       <Text>Hacia: {hacia}</Text>
 

@@ -1,16 +1,24 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {ActivityIndicator, Dimensions, FlatList, View} from 'react-native';
 import TripCard from './TripCard';
+import FirestoreContext from '../../context/Firestore/FirestoreContext';
 
 const {width, height} = Dimensions.get('window');
 
-export const TripCardContainer = ({
-  isLoading,
-  trips,
-  setTrips,
-  setUpdTripModal,
-  setEditedTrip,
-}) => {
+const TripSeparator = () => (
+  <View
+    style={{
+      height: 1.5,
+      backgroundColor: '#000',
+    }}
+  />
+);
+
+export const TripCardContainer = ({setUpdTripModal}) => {
+  //TODO modulizar estos componentes
+  const {trips, setTrips, isDataLoading, setEditedTrip} =
+    useContext(FirestoreContext);
+
   const renderTripCard = ({item}) => (
     <TripCard
       key={item.id}
@@ -23,15 +31,6 @@ export const TripCardContainer = ({
 
   const keyExtractor = item => item.id;
 
-  const TripSeparator = () => (
-    <View
-      style={{
-        height: 1.5,
-        backgroundColor: '#000',
-      }}
-    />
-  );
-
   const sortTrips = () => {
     return Object.values(trips).sort(
       (a, b) => b.fecha.seconds - a.fecha.seconds,
@@ -40,7 +39,7 @@ export const TripCardContainer = ({
 
   return (
     <View style={{borderWidth: 0, height: height - 140}}>
-      {isLoading ? (
+      {isDataLoading ? (
         <View style={{paddingVertical: 50, width}}>
           <ActivityIndicator size="large" color="#000" />
         </View>

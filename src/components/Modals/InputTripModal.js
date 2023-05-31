@@ -2,15 +2,8 @@ import React, {useState} from 'react';
 import {Modal, Text, View} from 'react-native';
 import TripForm from '../Inputs/TripForm';
 import modalTripStyles from '../../styles/inputModalStyles';
-import TripInfoProvider from '../../context/TripInfoProvider';
 
-const InputTripModal = ({
-  modalTitle,
-  addTripFirestore = false,
-  tripFromDB = false,
-  setTripModal,
-  setEditedTrip, //Prop only for updating trip
-}) => {
+const InputTripModal = ({title, addTripFirestore = false}) => {
   const [isFormInvalid, setFormInvalid] = useState(false);
 
   return (
@@ -18,17 +11,13 @@ const InputTripModal = ({
       <View style={modalTripStyles.container}>
         <View>
           {/* Title */}
-          <Text style={modalTripStyles.title}>{modalTitle}</Text>
+          <Text style={modalTripStyles.title}>{title}</Text>
 
-          <TripInfoProvider
-            tripFromDB={tripFromDB}
+          {/* Inputs */}
+          <TripForm
             setFormInvalid={setFormInvalid}
-            setTripModal={setTripModal}
-            setEditedTrip={setEditedTrip}
-            addTripFirestore={addTripFirestore}>
-            {/* Inputs */}
-            <TripForm />
-          </TripInfoProvider>
+            addTripFirestore={addTripFirestore}
+          />
 
           {isFormInvalid && (
             <Text style={modalTripStyles.warningLength}>

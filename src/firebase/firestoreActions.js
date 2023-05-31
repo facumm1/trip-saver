@@ -36,6 +36,7 @@ export const delFirestore = async tripId => {
   }
 };
 
+// TODO limpiar trips con la prop dateSelected de firestore
 export const updateFireStore = async tripInfo => {
   const {id, pasajero, importe, desde, hacia, fecha} = tripInfo;
 

@@ -2,10 +2,10 @@ import React, {useContext, useMemo} from 'react';
 import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import modalTripStyles from '../../styles/inputModalStyles';
 import {mapSecondsToString} from '../../helpers/mapDate';
-import {TripInfoContext} from '../../context/TripInfoContext';
+import FirestoreContext from '../../context/Firestore/FirestoreContext';
 
 const InputRow = ({setModalDate, tripInfo, dateInfo = false}) => {
-  const {setTripInfo} = useContext(TripInfoContext);
+  const {setSelectedTrip} = useContext(FirestoreContext);
 
   const calcInputWidth = useMemo(() => {
     return placeholder => (placeholder === 'Pasajero' ? '50%' : '25%');
@@ -20,7 +20,7 @@ const InputRow = ({setModalDate, tripInfo, dateInfo = false}) => {
   }, []);
 
   const handleInputChange = (placeholder, val) => {
-    setTripInfo(prevTripInfo => ({
+    setSelectedTrip(prevTripInfo => ({
       ...prevTripInfo,
       [mapPropName(placeholder)]: val,
     }));

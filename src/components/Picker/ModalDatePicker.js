@@ -1,22 +1,22 @@
 import React, {useContext, useMemo} from 'react';
 import {mapDateToSeconds, mapSecondsToDate} from '../../helpers/mapDate';
-import {TripInfoContext} from '../../context/TripInfoContext';
 import DatePicker from 'react-native-date-picker';
+import FirestoreContext from '../../context/Firestore/FirestoreContext';
 
 const ModalDatePicker = ({modalDatePicker, setModalDate}) => {
-  const {tripInfo, setTripInfo} = useContext(TripInfoContext);
+  const {selectedTrip, setSelectedTrip} = useContext(FirestoreContext);
 
   const checkTripFromDB = useMemo(() => {
-    return tripInfo.fecha.seconds
-      ? mapSecondsToDate(tripInfo.fecha)
+    return selectedTrip.fecha.seconds
+      ? mapSecondsToDate(selectedTrip.fecha)
       : new Date();
-  }, [tripInfo.fecha]);
+  }, [selectedTrip.fecha]);
 
   const handleConfirm = date => {
     console.log('Date Selected: ', date);
 
-    setTripInfo(prevTripInfo => ({
-      ...prevTripInfo,
+    setSelectedTrip(prevSelecTrip => ({
+      ...prevSelecTrip,
       fecha: mapDateToSeconds(date),
       dateSelected: true,
     }));

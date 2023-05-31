@@ -1,26 +1,33 @@
 import {updateFireStore, writeFirestore} from '../firebase/firestoreActions';
 import initialTripInfo from './initialTripInfo';
 
-export const add = (setTripModal, tripInfo, setTripInfo) => {
-  writeFirestore(tripInfo);
+//TODO refactor para estas funciones
 
-  setTripInfo(initialTripInfo());
+export const add = (setTripModal, selectedTrip, setSelectedTrip) => {
+  writeFirestore(selectedTrip);
+
+  setSelectedTrip(initialTripInfo());
   setTripModal(prevStatus => !prevStatus);
 };
 
-export const modify = (setTripModal, tripInfo, setTripInfo, setEditedTrip) => {
-  updateFireStore(tripInfo);
+export const modify = (
+  setTripModal,
+  selectedTrip,
+  setSelectedTrip,
+  setEditedTrip,
+) => {
+  updateFireStore(selectedTrip);
   setEditedTrip(prev => ({updated: true, id: ''}));
 
-  setTripInfo(initialTripInfo());
+  setSelectedTrip(initialTripInfo());
   setTripModal(prevStatus => !prevStatus);
 };
 
-export const cancel = (setTripModal, setTripInfo, setEditedTrip) => {
+export const cancel = (setTripModal, setSelectedTrip, setEditedTrip) => {
   if (setEditedTrip) {
     setEditedTrip(prev => ({...prev, id: ''}));
   }
 
-  setTripInfo(initialTripInfo());
+  setSelectedTrip(initialTripInfo());
   setTripModal(prevStatus => !prevStatus);
 };

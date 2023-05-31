@@ -1,31 +1,31 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import InputTripModal from './Modals/InputTripModal';
 import {TripCounter} from './Counters/TripCounter';
+import FirestoreContext from '../context/Firestore/FirestoreContext';
 
 const {height} = Dimensions.get('window');
 
-export const TopContainer = ({userName}) => {
-  const [addTripModal, setAddTripModal] = useState(false);
+export const TopContainer = ({userName, addTripModal}) => {
+  const {setTripModal} = useContext(FirestoreContext);
 
+  // TODO usar una ventana modal distinta para add o modify un trip
   return (
     <View style={topContainerStyles.container}>
       {addTripModal && (
         <InputTripModal
-          modalTitle="Añadir un viaje nuevo"
+          title="Añadir un viaje nuevo"
           addTripFirestore
-          setTripModal={setAddTripModal}
+          setTripModal={setTripModal}
         />
       )}
-
       <View>
         <Text style={topContainerStyles.appTitle}>Trip Saver</Text>
       </View>
-
       <View style={topContainerStyles.content}>
         <Text style={topContainerStyles.username}>Hola, {userName}!</Text>
 
-        <TripCounter setAddTripModal={setAddTripModal} />
+        <TripCounter />
       </View>
     </View>
   );
