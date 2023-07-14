@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Modal, Text, View} from 'react-native';
-import TripForm from '../Inputs/TripForm';
 import modalTripStyles from '../../styles/inputModalStyles';
+import TripForm from '../Forms/TripForm';
 
 const InputTripModal = ({title, addTripFirestore = false}) => {
   const [isFormInvalid, setFormInvalid] = useState(false);

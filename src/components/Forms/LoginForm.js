@@ -1,19 +1,8 @@
 import React, {useState} from 'react';
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-} from 'react-native';
+import {Text, TouchableOpacity, View, StyleSheet} from 'react-native';
 import GoogleButton from '../Buttons/GoogleButton';
-import {handleChangeText, handleFocus} from '../../helpers/loginHandlers';
 import AuthButton from '../Buttons/AuthButton';
-
-const inputsData = [
-  {inputName: 'email', placeholder: 'Email'},
-  {inputName: 'password', placeholder: 'Contraseña'},
-];
+import LoginInputs from '../Inputs/LoginInputs';
 
 export const LoginForm = ({changeForm}) => {
   const [loginData, setLoginData] = useState({email: '', password: ''});
@@ -34,22 +23,12 @@ export const LoginForm = ({changeForm}) => {
             </TouchableOpacity>
           </View>
 
-          {inputsData.map((data, index) => (
-            <TextInput
-              key={index}
-              onFocus={() => {
-                if (errorMessage.length > 0) {
-                  handleFocus(setErrorMessage, loginData);
-                }
-              }}
-              onChangeText={text =>
-                handleChangeText(data.inputName, text, setLoginData)
-              }
-              value={loginData[data.inputName]}
-              style={loginFormStyles.input}
-              placeholder={data.placeholder}
-            />
-          ))}
+          <LoginInputs
+            errorMessage={errorMessage}
+            loginData={loginData}
+            setErrorMessage={setErrorMessage}
+            setLoginData={setLoginData}
+          />
 
           <Text style={{marginTop: 5, color: '#ff0008'}}>{errorMessage}</Text>
 
@@ -77,12 +56,5 @@ const loginFormStyles = StyleSheet.create({
   subtitle: {
     fontSize: 17,
     marginVertical: 2.5,
-  },
-  input: {
-    borderWidth: 0.7,
-    borderRadius: 10,
-    paddingLeft: 10,
-    width: '100%',
-    marginTop: 25,
   },
 });

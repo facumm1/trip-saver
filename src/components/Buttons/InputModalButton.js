@@ -5,7 +5,7 @@ import {add, cancel, modify} from '../../helpers/InputModalFunc';
 import FirestoreContext from '../../context/Firestore/FirestoreContext';
 
 export const InputModalButton = ({btnTitle, setFormInvalid}) => {
-  const {selectedTrip, setSelectedTrip, setEditedTrip, setTripModal} =
+  const {selectedTrip, setSelectedTrip, setEditedTrip, setTripModal, uid} =
     useContext(FirestoreContext);
 
   const validateTripProps = () => {
@@ -36,7 +36,7 @@ export const InputModalButton = ({btnTitle, setFormInvalid}) => {
         switch (btnTitle) {
           case 'Añadir':
             if (validateTripProps()) {
-              add(setTripModal, selectedTrip, setSelectedTrip);
+              add(setTripModal, selectedTrip, setSelectedTrip, uid);
             }
             break;
           case 'Modificar':

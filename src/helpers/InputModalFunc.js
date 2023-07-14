@@ -3,8 +3,8 @@ import initialTripInfo from './initialTripInfo';
 
 //TODO refactor para estas funciones
 
-export const add = (setTripModal, selectedTrip, setSelectedTrip) => {
-  writeFirestore(selectedTrip);
+export const add = (setTripModal, selectedTrip, setSelectedTrip, uid) => {
+  writeFirestore(selectedTrip, uid);
 
   setSelectedTrip(initialTripInfo());
   setTripModal(prevStatus => !prevStatus);

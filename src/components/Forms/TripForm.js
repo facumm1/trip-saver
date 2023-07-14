@@ -5,7 +5,7 @@ import modalTripStyles from '../../styles/inputModalStyles';
 import ModalDatePicker from '../Picker/ModalDatePicker';
 import useTripActions from '../../hooks/useTripsActions';
 import FirestoreContext from '../../context/Firestore/FirestoreContext';
-import InputContainer from './InputContainer';
+import InputContainer from '../Inputs/InputContainer';
 
 const TripForm = ({setFormInvalid, addTripFirestore}) => {
   const {selectedTrip} = useContext(FirestoreContext);

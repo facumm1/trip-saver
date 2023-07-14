@@ -6,6 +6,7 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
+  AsyncStorage,
 } from 'react-native';
 
 import {BottomContainer} from '../components/BottomContainer';
@@ -15,13 +16,22 @@ const MainScreen = () => {
   const [addTripModal, setAddTripModal] = useState(false);
   //TODO refactor para evitar states en componentes padres
 
+  const getUserInfo = async () => {
+    const storedFullName = await AsyncStorage.getItem('fullName');
+    const storedUid = await AsyncStorage.getItem('id');
+
+    return {storedFullName, storedUid};
+  };
+
+  React.useEffect(() => console.log(getUserInfo()), []);
+
   return (
     <SafeAreaView>
       <StatusBar barStyle={'light-content'} />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={mainScreenStyles.container}>
-          <FirestoreProvider setTripModal={setAddTripModal}>
-            <TopContainer userName="Jose Luis" addTripModal={addTripModal} />
+          <FirestoreProvider setTripModal={setAddTripModal} /* uid={id} */>
+            <TopContainer userName={'Fulano'} addTripModal={addTripModal} />
             <BottomContainer />
           </FirestoreProvider>
         </View>

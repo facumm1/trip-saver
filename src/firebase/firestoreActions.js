@@ -1,8 +1,14 @@
 import firestore from '@react-native-firebase/firestore';
 
-export const readFirestore = async () => {
+export const readFirestore = async uid => {
   try {
-    const tripsData = await firestore().collection('viajes').get();
+    const tripsData = await firestore()
+      .collection('usuarios')
+      .doc(uid)
+      .collection('viajes')
+      .get();
+
+    console.log('tripsData', tripsData.docs);
 
     console.log('Reading trips...');
 
@@ -12,14 +18,18 @@ export const readFirestore = async () => {
   }
 };
 
-export const writeFirestore = async tripInfo => {
+export const writeFirestore = async (tripInfo, uid) => {
   try {
     const {id, pasajero, importe, desde, hacia, fecha} = tripInfo;
+    console.log('id:', uid);
 
     await firestore()
+      .collection('usuarios')
+      .doc(uid)
       .collection('viajes')
-      .doc(tripInfo.id)
+      .doc(id)
       .set({id, pasajero, importe, desde, hacia, fecha});
+
     console.log('Adding new trip...');
   } catch (err) {
     console.error('writeFirestore error:', err);

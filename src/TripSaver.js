@@ -4,7 +4,7 @@ import StackNavigator from './navigation/StackNavigator';
 import auth from '@react-native-firebase/auth';
 
 const TripSaver = () => {
-  useEffect(() => {
+  /* useEffect(() => {
     auth()
       .signInAnonymously()
       .then(() => {
@@ -17,7 +17,7 @@ const TripSaver = () => {
 
         console.error(error);
       });
-  }, []);
+  }, []); */
 
   return (
     <NavigationContainer>

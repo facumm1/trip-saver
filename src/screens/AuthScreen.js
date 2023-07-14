@@ -1,7 +1,7 @@
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import {LoginForm} from '../components/AuthComponents/LoginForm';
-import {RegisterForm} from '../components/AuthComponents/RegisterForm';
+import {LoginForm} from '../components/Forms/LoginForm';
+import {RegisterForm} from '../components/Forms/RegisterForm';
 
 const AuthScreen = () => {
   const [registerForm, setRegisterForm] = useState(false);

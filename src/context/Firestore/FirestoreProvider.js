@@ -4,7 +4,7 @@ import {readFirestore} from '../../firebase/firestoreActions';
 import FirestoreContext from './FirestoreContext';
 import initialTripInfo from '../../helpers/initialTripInfo';
 
-const FirestoreProvider = ({children, setTripModal}) => {
+const FirestoreProvider = ({children, setTripModal, uid}) => {
   //TODO unificar states, armar custom hooks o meterlos en un reducer
   const [trips, setTrips] = useState();
   const [editedTrip, setEditedTrip] = useState({id: '', updated: false});
@@ -15,7 +15,9 @@ const FirestoreProvider = ({children, setTripModal}) => {
     console.log('readTripsData called');
     setEditedTrip(prev => ({...prev, updated: false, id: ''}));
 
-    readFirestore()
+    console.log('uid', uid);
+
+    readFirestore(uid)
       .then(res => {
         res.forEach(trip =>
           setTrips(prev => ({...prev, [trip.data().id]: trip.data()})),
@@ -24,6 +26,8 @@ const FirestoreProvider = ({children, setTripModal}) => {
       })
       .catch(console.error);
   };
+
+  useEffect(() => console.log('from provider', trips), [trips]);
 
   useEffect(() => {
     if (isDataLoading || editedTrip.updated) {
@@ -48,6 +52,7 @@ const FirestoreProvider = ({children, setTripModal}) => {
     <FirestoreContext.Provider
       value={{
         trips,
+        uid,
         isDataLoading,
         editedTrip,
         selectedTrip,
