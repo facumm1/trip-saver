@@ -1,4 +1,4 @@
-const buttonStyles = {
+const buttonStyles: {btn: any; textBtn: any} = {
   btn: {
     backgroundColor: '#fff',
     width: '40%',
