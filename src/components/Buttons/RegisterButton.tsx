@@ -5,7 +5,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {validateRegisterData} from '../../helpers/loginHandlers';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {RegisterCredentialsTypes} from '../Containers/RegisterContainer';
+import {RegisterCredentialsTypes} from '../../hooks/useRegisterData';
 
 type Props = {
   handleShowError: () => void;

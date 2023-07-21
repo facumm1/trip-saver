@@ -23,7 +23,10 @@ const useLoginData = (): LoginHookTypes => {
     setErrorMessage(msg);
   };
 
-  const handleCredentials = (key: string, value: string): void => {
+  const handleCredentials = (
+    key: keyof CredentialsTypes | string,
+    value: string,
+  ): void => {
     setCredentials(data => ({
       ...data,
       [key]: value,

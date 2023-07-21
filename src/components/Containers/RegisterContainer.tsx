@@ -1,37 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import RegisterForm from '../Forms/RegisterForm';
 import appColors from '../../styles/appColors';
 import RegisterButton from '../Buttons/RegisterButton';
+import useRegisterData from '../../hooks/useRegisterData';
 
-export type RegisterCredentialsTypes = {
-  fullName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
+type Props = {handleChangeForm: () => void};
 
-const RegisterContainer: React.FC<{handleChangeForm: () => void}> = ({
-  handleChangeForm,
-}) => {
-  const [showErrorMsg, setShowErrorMsg] = useState<boolean>(false);
-  const [registerCred, setRegisterCred] = useState<RegisterCredentialsTypes>({
-    fullName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
-
-  const handleShowError = (): void => {
-    setShowErrorMsg(!showErrorMsg);
-  };
-
-  const handleRegisterCred = (key: string, value: string): void => {
-    setRegisterCred(data => ({
-      ...data,
-      [key]: value,
-    }));
-  };
+const RegisterContainer: React.FC<Props> = ({handleChangeForm}) => {
+  const {showErrorMsg, registerCred, handleShowError, handleRegisterCred} =
+    useRegisterData();
 
   return (
     <>

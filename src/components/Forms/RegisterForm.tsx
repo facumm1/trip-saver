@@ -1,35 +1,16 @@
 import React, {Fragment} from 'react';
 import {StyleSheet, Text, TextInput} from 'react-native';
-import {RegisterCredentialsTypes} from '../Containers/RegisterContainer';
-
-const inputsData = [
-  {
-    inputName: 'fullName',
-    placeholder: 'Nombre completo',
-    errorMsg: 'El nombre debe contener mínimo 2 letras.',
-  },
-  {
-    inputName: 'email',
-    placeholder: 'Email',
-    errorMsg: 'El email debe tener al menos una arroba.',
-  },
-  {
-    inputName: 'password',
-    placeholder: 'Contraseña',
-    errorMsg: 'La contraseña debe tener mínimo 6 letras.',
-  },
-  {
-    inputName: 'confirmPassword',
-    placeholder: 'Confirmar contraseña',
-    errorMsg: 'Las contraseñas deben coincidir.',
-  },
-];
+import {RegisterCredentialsTypes} from '../../hooks/useRegisterData';
+import {registerValues} from '../../util/AuthFormValues';
 
 type Props = {
   errorMessage: boolean;
   registerCred: RegisterCredentialsTypes;
   handleShowError: () => void;
-  handleRegisterCred: (key: string, value: string) => void;
+  handleRegisterCred: (
+    key: keyof RegisterCredentialsTypes,
+    value: string,
+  ) => void;
 };
 
 const RegisterForm: React.FC<Props> = ({
@@ -40,11 +21,16 @@ const RegisterForm: React.FC<Props> = ({
 }) => {
   return (
     <>
-      {inputsData.map(({inputName, errorMsg, placeholder}, index) => (
+      {registerValues.map(({inputName, errorMsg, placeholder}, index) => (
         <Fragment key={index}>
           <TextInput
             onFocus={() => errorMessage && handleShowError()}
-            onChangeText={text => handleRegisterCred(inputName, text)}
+            onChangeText={text =>
+              handleRegisterCred(
+                inputName as keyof RegisterCredentialsTypes,
+                text,
+              )
+            }
             value={registerCred[inputName as keyof RegisterCredentialsTypes]}
             style={styles.input}
             placeholder={placeholder}
