@@ -1,22 +1,21 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import appColors from '../styles/appColors';
-import LoginForm from '../components/Forms/LoginContainer';
-import RegisterContainer from '../components/Forms/RegisterContainer';
+import useToggle from '../hooks/useToggle';
+import {LoginContainer, RegisterContainer} from '../components/Containers';
 
 const AuthScreen: React.FC = () => {
-  const [registerForm, setRegisterForm] = useState<boolean>(false);
-  const handleChangeForm = (): void => setRegisterForm(prev => !prev);
+  const {open: isRegisterActive, handleOpen: handleChangeForm} = useToggle();
 
   return (
     <View style={styles.container}>
-      <View style={{...styles.header, flex: registerForm ? 0.4 : 0.6}}>
+      <View style={{...styles.header, flex: isRegisterActive ? 0.4 : 0.6}}>
         <Text style={styles.headerText}>Trip Saver</Text>
       </View>
 
       <View style={styles.contentContainer}>
-        {!registerForm ? (
-          <LoginForm handleChangeForm={handleChangeForm} />
+        {!isRegisterActive ? (
+          <LoginContainer handleChangeForm={handleChangeForm} />
         ) : (
           <RegisterContainer handleChangeForm={handleChangeForm} />
         )}

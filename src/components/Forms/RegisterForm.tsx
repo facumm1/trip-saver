@@ -1,6 +1,6 @@
-import React, {Dispatch, Fragment, SetStateAction} from 'react';
+import React, {Fragment} from 'react';
 import {StyleSheet, Text, TextInput} from 'react-native';
-import {RegisterCredentialsTypes} from '../Forms/RegisterContainer';
+import {RegisterCredentialsTypes} from '../Containers/RegisterContainer';
 
 const inputsData = [
   {
@@ -28,42 +28,23 @@ const inputsData = [
 type Props = {
   errorMessage: boolean;
   registerCred: RegisterCredentialsTypes;
-  setErrorMessage: Dispatch<React.SetStateAction<boolean>>;
-  setRegisterCred: Dispatch<React.SetStateAction<RegisterCredentialsTypes>>;
+  handleShowError: () => void;
+  handleRegisterCred: (key: string, value: string) => void;
 };
 
 const RegisterForm: React.FC<Props> = ({
   errorMessage,
   registerCred,
-  setErrorMessage,
-  setRegisterCred,
+  handleShowError,
+  handleRegisterCred,
 }) => {
-  const handleFocus = (
-    setState: React.Dispatch<SetStateAction<boolean>>,
-  ): void => {
-    setState(false);
-  };
-
-  const handleChangeText = (
-    key: string,
-    value: string,
-    setState: React.Dispatch<SetStateAction<RegisterCredentialsTypes>>,
-  ) => {
-    setState(data => ({
-      ...data,
-      [key]: value,
-    }));
-  };
-
   return (
     <>
       {inputsData.map(({inputName, errorMsg, placeholder}, index) => (
         <Fragment key={index}>
           <TextInput
-            onFocus={() => errorMessage && handleFocus(setErrorMessage)}
-            onChangeText={text =>
-              handleChangeText(inputName, text, setRegisterCred)
-            }
+            onFocus={() => errorMessage && handleShowError()}
+            onChangeText={text => handleRegisterCred(inputName, text)}
             value={registerCred[inputName as keyof RegisterCredentialsTypes]}
             style={styles.input}
             placeholder={placeholder}

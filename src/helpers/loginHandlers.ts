@@ -1,4 +1,4 @@
-import {RegisterCredentialsTypes} from '../components/Forms/RegisterContainer';
+import {RegisterCredentialsTypes} from '../components/Containers/RegisterContainer';
 
 /* export const handleChangeText = (key, value, setState) => {
   setState(data => ({

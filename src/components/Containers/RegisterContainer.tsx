@@ -1,26 +1,37 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import AuthButton from '../Buttons/AuthButton';
-import RegisterForm from '../Inputs/RegisterForm';
+import RegisterForm from '../Forms/RegisterForm';
 import appColors from '../../styles/appColors';
+import RegisterButton from '../Buttons/RegisterButton';
 
 export type RegisterCredentialsTypes = {
-  fullName?: string;
+  fullName: string;
   email: string;
   password: string;
-  confirmPassword?: string;
+  confirmPassword: string;
 };
 
 const RegisterContainer: React.FC<{handleChangeForm: () => void}> = ({
   handleChangeForm,
 }) => {
-  const [errorMessage, setErrorMessage] = useState<boolean>(false);
+  const [showErrorMsg, setShowErrorMsg] = useState<boolean>(false);
   const [registerCred, setRegisterCred] = useState<RegisterCredentialsTypes>({
     fullName: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
+
+  const handleShowError = (): void => {
+    setShowErrorMsg(!showErrorMsg);
+  };
+
+  const handleRegisterCred = (key: string, value: string): void => {
+    setRegisterCred(data => ({
+      ...data,
+      [key]: value,
+    }));
+  };
 
   return (
     <>
@@ -30,20 +41,19 @@ const RegisterContainer: React.FC<{handleChangeForm: () => void}> = ({
           <Text style={styles.subtitle}>Completa los datos para continuar</Text>
 
           <RegisterForm
-            errorMessage={errorMessage}
+            errorMessage={showErrorMsg}
             registerCred={registerCred}
-            setErrorMessage={setErrorMessage}
-            setRegisterCred={setRegisterCred}
+            handleShowError={handleShowError}
+            handleRegisterCred={handleRegisterCred}
           />
 
-          <AuthButton
-            setErrorMessage={setErrorMessage}
+          <RegisterButton
             credentials={registerCred}
-            registerBtn
+            handleShowError={handleShowError}
           />
 
           <TouchableOpacity onPress={handleChangeForm} style={styles.backBtn}>
-            <Text style={{textAlign: 'center'}}>Volver</Text>
+            <Text style={styles.backBtnText}>Volver</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -74,6 +84,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2.5,
     paddingHorizontal: 15,
   },
+  backBtnText: {textAlign: 'center'},
 });
 
 export default RegisterContainer;
