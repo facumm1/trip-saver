@@ -8,10 +8,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginDataContext from '../../context/LoginDataContext';
 
 const LoginButton: React.FC = () => {
+  //TODO terminar refactor de este componente
   const navigation: NavigationProp<any, 'MainScreen'> = useNavigation();
 
-  const {errorMessage, credentials, handleErrorMsg, handleCredentials} =
-    useContext(LoginDataContext);
+  const {credentials, handleErrorMsg} = useContext(LoginDataContext);
 
   const login = async () => {
     if (!validateLoginData(credentials)) {
