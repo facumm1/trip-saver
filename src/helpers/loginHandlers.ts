@@ -1,19 +1,4 @@
-import {RegisterCredentialsTypes} from '../components/Containers/RegisterContainer';
-
-/* export const handleChangeText = (key, value, setState) => {
-  setState(data => ({
-    ...data,
-    [key]: value,
-  }));
-};
-
-export const handleFocus = (setState, registerScreen = false): void => {
-  if (registerScreen) {
-    setState(invalidData => invalidData && false);
-    return;
-  }
-  setState('');
-}; */
+import {RegisterCredentialsTypes} from '../hooks/useRegisterData';
 
 export const validateRegisterData = ({
   fullName,

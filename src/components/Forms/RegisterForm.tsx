@@ -1,30 +1,20 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useContext} from 'react';
 import {StyleSheet, Text, TextInput} from 'react-native';
 import {RegisterCredentialsTypes} from '../../hooks/useRegisterData';
 import {registerValues} from '../../util/AuthFormValues';
+import RegisterDataContext from '../../context/RegisterDataContext';
 
-type Props = {
-  errorMessage: boolean;
-  registerCred: RegisterCredentialsTypes;
-  handleShowError: () => void;
-  handleRegisterCred: (
-    key: keyof RegisterCredentialsTypes,
-    value: string,
-  ) => void;
-};
+const RegisterForm: React.FC = () => {
+  const {showErrorMsg, registerCred, handleShowError, handleRegisterCred} =
+    useContext(RegisterDataContext);
 
-const RegisterForm: React.FC<Props> = ({
-  errorMessage,
-  registerCred,
-  handleShowError,
-  handleRegisterCred,
-}) => {
+  //TODO cambiar key de fragment, revisar type de inputName
   return (
     <>
       {registerValues.map(({inputName, errorMsg, placeholder}, index) => (
         <Fragment key={index}>
           <TextInput
-            onFocus={() => errorMessage && handleShowError()}
+            onFocus={() => showErrorMsg && handleShowError()}
             onChangeText={text =>
               handleRegisterCred(
                 inputName as keyof RegisterCredentialsTypes,
@@ -35,7 +25,7 @@ const RegisterForm: React.FC<Props> = ({
             style={styles.input}
             placeholder={placeholder}
           />
-          <Text style={styles.errorMsg}>{errorMessage && errorMsg}</Text>
+          <Text style={styles.errorMsg}>{showErrorMsg && errorMsg}</Text>
         </Fragment>
       ))}
     </>

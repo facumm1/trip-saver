@@ -3,36 +3,29 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import RegisterForm from '../Forms/RegisterForm';
 import appColors from '../../styles/appColors';
 import RegisterButton from '../Buttons/RegisterButton';
-import useRegisterData from '../../hooks/useRegisterData';
+import RegisterDataProvider from '../../context/RegisterDataProvider';
 
 type Props = {handleChangeForm: () => void};
 
 const RegisterContainer: React.FC<Props> = ({handleChangeForm}) => {
-  const {showErrorMsg, registerCred, handleShowError, handleRegisterCred} =
-    useRegisterData();
-
   return (
     <>
       <View style={styles.content}>
         <View style={styles.formContainer}>
+          {/* Title */}
           <Text style={styles.title}>Registrarse</Text>
           <Text style={styles.subtitle}>Completa los datos para continuar</Text>
 
-          <RegisterForm
-            errorMessage={showErrorMsg}
-            registerCred={registerCred}
-            handleShowError={handleShowError}
-            handleRegisterCred={handleRegisterCred}
-          />
+          {/* Form */}
+          <RegisterDataProvider>
+            <RegisterForm />
 
-          <RegisterButton
-            credentials={registerCred}
-            handleShowError={handleShowError}
-          />
+            <RegisterButton />
 
-          <TouchableOpacity onPress={handleChangeForm} style={styles.backBtn}>
-            <Text style={styles.backBtnText}>Volver</Text>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={handleChangeForm} style={styles.backBtn}>
+              <Text style={styles.backBtnText}>Volver</Text>
+            </TouchableOpacity>
+          </RegisterDataProvider>
         </View>
       </View>
     </>
