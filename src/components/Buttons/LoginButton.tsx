@@ -1,21 +1,16 @@
 import React, {useContext} from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import auth from '@react-native-firebase/auth';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import buttonStyles from '../../styles/buttonStyle';
 import {validateLoginData} from '../../helpers/loginHandlers';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginDataContext from '../../context/LoginDataContext';
+import {userLogging} from '../../firebase/auth/auth';
 
 const LoginButton: React.FC = () => {
   //TODO terminar refactor de este componente
-  const navigation: NavigationProp<any, 'MainScreen'> = useNavigation();
-
   const {credentials, handleErrorMsg} = useContext(LoginDataContext);
 
-  const login = async () => {
+  const handleLogin = async () => {
     if (!validateLoginData(credentials)) {
-      console.log('NO se logro iniciar sesion');
       handleErrorMsg('Email o contraseña con pocos caracteres.');
       return;
     }
@@ -24,34 +19,12 @@ const LoginButton: React.FC = () => {
 
     console.log('Se logro iniciar sesion con', email, password);
 
-    try {
-      await auth().signInWithEmailAndPassword(email, password);
-
-      const user = auth().currentUser;
-      const uuid = user?.uid;
-
-      console.log('User account signed in. Storing personal data...');
-
-      await AsyncStorage.setItem('fullName', user?.displayName || '');
-      await AsyncStorage.setItem('id', uuid || '');
-
-      //navigation.navigate('MainScreen');
-    } catch (error: any) {
-      if (
-        error.code === 'auth/user-not-found' ||
-        error.code === 'auth/wrong-password'
-      ) {
-        handleErrorMsg('El usuario no se encuentra registrado.');
-        return;
-      }
-
-      console.warn('Error:', error.code);
-    }
+    await userLogging(credentials);
   };
 
   return (
     <TouchableOpacity
-      onPress={login}
+      onPress={handleLogin}
       style={[buttonStyles.btn, styles.loginButton]}>
       <Text style={[buttonStyles.textBtn, styles.loginButtonText]}>
         Iniciar sesión

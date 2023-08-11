@@ -10,7 +10,7 @@ const RegisterButton: React.FC = () => {
   const {registerCred: credentials, handleShowError} =
     useContext(RegisterDataContext);
 
-  const handleOnPress = async () => {
+  const handleRegister = async () => {
     if (!validateRegisterData(credentials)) {
       handleShowError();
       return;
@@ -21,7 +21,7 @@ const RegisterButton: React.FC = () => {
 
   return (
     <TouchableOpacity
-      onPress={handleOnPress}
+      onPress={handleRegister}
       style={[buttonStyles.btn, styles.loginButton]}>
       <Text style={[buttonStyles.textBtn, styles.loginButtonText]}>
         Registrarse

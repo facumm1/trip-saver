@@ -8,6 +8,7 @@ const LoginForm: React.FC = () => {
   const {errorMessage, credentials, handleErrorMsg, handleCredentials} =
     useContext(LoginDataContext);
 
+  //TODO cambiar key de fragment, revisar type de inputName
   return (
     <>
       {loginValues.map(({inputName, placeholder}: AuthFormTypes, index) => (
