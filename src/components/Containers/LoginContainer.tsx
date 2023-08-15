@@ -15,21 +15,21 @@ const LoginContainer: React.FC<Props> = ({handleChangeForm}) => {
     <>
       <View style={styles.content}>
         <View style={styles.formContainer}>
-          {/* Title */}
-          <Text style={styles.title}>Iniciar sesión</Text>
-          <ChangeFormButton handleChangeForm={handleChangeForm} />
-
           {/* Form */}
           <LoginDataProvider>
             <LoginForm />
+
+            <ChangeFormButton handleChangeForm={handleChangeForm} />
 
             <LoginErrorMsg />
 
             <LoginButton />
           </LoginDataProvider>
 
+          <Text style={styles.optionText}>O también</Text>
+
           {/* Google OAuth */}
-          <GoogleButton title="O ingresá también con" />
+          <GoogleButton />
         </View>
       </View>
     </>
@@ -40,14 +40,14 @@ const styles = StyleSheet.create({
   content: {
     alignItems: 'center',
     backgroundColor: appColors.white,
-    flex: 1,
   },
   formContainer: {
     width: '75%',
     marginTop: 30,
   },
-  title: {
-    fontSize: 22.5,
+  optionText: {
+    textAlign: 'center',
+    marginVertical: 15,
   },
 });
 

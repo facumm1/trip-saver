@@ -1,16 +1,14 @@
 import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import appColors from '../../styles/appColors';
+import {AppLogo} from '../Logos';
 
 const {width} = Dimensions.get('window');
 
 const GetStartedTop: React.FC = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <FontAwesome5 name="car" size={40} color={appColors.darkBlue} />
-      </View>
+      <AppLogo logoStyles={styles.logoStyles} logoSize={40} />
     </View>
   );
 };
@@ -24,7 +22,7 @@ const styles = StyleSheet.create({
     width: '100%',
     elevation: 5,
   },
-  logoContainer: {
+  logoStyles: {
     alignItems: 'center',
     backgroundColor: appColors.grayActive,
     borderRadius: 85 / 2,

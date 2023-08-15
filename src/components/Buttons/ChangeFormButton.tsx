@@ -6,8 +6,9 @@ const ChangeFormButton: React.FC<{handleChangeForm: () => void}> = ({
   handleChangeForm,
 }) => {
   return (
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+    <View style={styles.container}>
       <Text style={styles.subtitle}>¿No tenés una cuenta?</Text>
+
       <TouchableOpacity onPress={handleChangeForm}>
         <Text style={styles.btnText}>Registrate ya!</Text>
       </TouchableOpacity>
@@ -16,12 +17,16 @@ const ChangeFormButton: React.FC<{handleChangeForm: () => void}> = ({
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   subtitle: {
-    fontSize: 17,
-    marginVertical: 2.5,
+    fontSize: 14,
   },
   btnText: {
-    color: appColors.blue,
+    color: appColors.darkBlue,
     fontWeight: '600',
     marginLeft: 5,
   },

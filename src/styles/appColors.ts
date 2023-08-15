@@ -9,6 +9,7 @@ type ColorTypes = {
   darkBlue: string;
   green: string;
   greenActive: string;
+  gray: string;
   grayActive: string;
 };
 
@@ -19,10 +20,11 @@ const appColors: ColorTypes = {
   blue: '#1D3557',
   black: '#000000',
   //New
-  white: '#F2F2F2',
+  white: '#FFFFFF',
   darkBlue: '#0E1626',
   green: '#A4F280',
   greenActive: '#CEF2BD',
+  gray: '#d9dadb',
   grayActive: '#ECEDF1',
 };
 

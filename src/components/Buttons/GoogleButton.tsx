@@ -1,41 +1,32 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import appColors from '../../styles/appColors';
 
-const GoogleButton: React.FC<{title: string}> = ({title}) => {
+const GoogleButton: React.FC = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-
-      <View>
-        <TouchableOpacity style={styles.btn}>
-          <Text style={styles.textBtn}>G</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <TouchableOpacity style={styles.btn}>
+      <FontAwesome name="google" size={20} color={'red'} />
+      <Text style={styles.textBtn}>Iniciar sesión con Google</Text>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    alignSelf: 'center',
-    marginTop: 15,
-    width: '75%',
-  },
-  title: {
-    fontSize: 17,
-    textAlign: 'center',
-  },
   btn: {
-    alignSelf: 'center',
+    flexDirection: 'row',
     borderRadius: 30,
-    borderWidth: 0.7,
+    borderWidth: 1,
+    borderColor: appColors.gray,
     marginTop: 7.5,
-    paddingHorizontal: 25,
-    paddingVertical: 5,
-    width: '40%',
+    paddingVertical: 10,
+    justifyContent: 'center',
   },
   textBtn: {
-    fontSize: 20,
+    color: appColors.darkBlue,
+    fontSize: 14,
+    fontWeight: '400',
+    marginLeft: 10,
     textAlign: 'center',
   },
 });

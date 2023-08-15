@@ -1,9 +1,10 @@
 import React, {useContext} from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import buttonStyles from '../../styles/buttonStyle';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {validateLoginData} from '../../helpers/loginHandlers';
 import LoginDataContext from '../../context/LoginDataContext';
 import {userLogging} from '../../firebase/auth/auth';
+import appColors from '../../styles/appColors';
+import RightArrowIcon from '../Icons/RightArrowIcon';
 
 const LoginButton: React.FC = () => {
   //TODO terminar refactor de este componente
@@ -22,25 +23,32 @@ const LoginButton: React.FC = () => {
     await userLogging(credentials);
   };
 
+  //TODO fixear position absolute
   return (
-    <TouchableOpacity
-      onPress={handleLogin}
-      style={[buttonStyles.btn, styles.loginButton]}>
-      <Text style={[buttonStyles.textBtn, styles.loginButtonText]}>
-        Iniciar sesión
-      </Text>
+    <TouchableOpacity onPress={handleLogin} style={styles.btn}>
+      <Text style={styles.text}>Iniciar sesión</Text>
+      <View style={{position: 'absolute', right: 10, bottom: 12}}>
+        <RightArrowIcon iconSize={17.5} />
+      </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  loginButton: {
-    backgroundColor: '#000',
+  btn: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    backgroundColor: appColors.green,
     marginTop: 12,
-    width: '75%',
+    borderRadius: 50,
+    paddingVertical: 12.5,
   },
-  loginButtonText: {
-    color: '#fff',
+  text: {
+    fontWeight: '500',
+    fontSize: 14,
+    color: appColors.darkBlue,
+    textAlign: 'center',
   },
 });
 

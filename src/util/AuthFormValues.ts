@@ -3,33 +3,40 @@ import {CredentialsTypes} from '../hooks/useLoginData';
 export interface AuthFormTypes {
   inputName: keyof CredentialsTypes | string;
   placeholder: string;
+  inputText?: string;
   errorMsg?: string;
 }
 
 export const loginValues: AuthFormTypes[] = [
-  {inputName: 'email', placeholder: 'Email'},
-  {inputName: 'password', placeholder: 'Contraseña'},
+  {
+    inputName: 'email',
+    inputText: 'Tu correo electrónico',
+    placeholder: 'robertocostas@gmail.com',
+  },
+  {
+    inputName: 'password',
+    inputText: 'Contraseña',
+    placeholder: '123456',
+  },
 ];
 
 export const registerValues: AuthFormTypes[] = [
   {
     inputName: 'fullName',
-    placeholder: 'Nombre completo',
+    inputText: 'Nombre completo',
+    placeholder: 'Roberto Costas',
     errorMsg: 'El nombre debe contener mínimo 2 letras.',
   },
   {
     inputName: 'email',
-    placeholder: 'Email',
+    inputText: 'Tu correo electrónico',
+    placeholder: 'robertocostas@gmail.com',
     errorMsg: 'El email debe tener al menos una arroba.',
   },
   {
     inputName: 'password',
-    placeholder: 'Contraseña',
+    inputText: 'Contraseña',
+    placeholder: 'min. 6 carácteres',
     errorMsg: 'La contraseña debe tener mínimo 6 letras.',
-  },
-  {
-    inputName: 'confirmPassword',
-    placeholder: 'Confirmar contraseña',
-    errorMsg: 'Las contraseñas deben coincidir.',
   },
 ];

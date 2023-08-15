@@ -12,10 +12,6 @@ const RegisterContainer: React.FC<Props> = ({handleChangeForm}) => {
     <>
       <View style={styles.content}>
         <View style={styles.formContainer}>
-          {/* Title */}
-          <Text style={styles.title}>Registrarse</Text>
-          <Text style={styles.subtitle}>Completa los datos para continuar</Text>
-
           {/* Form */}
           <RegisterDataProvider>
             <RegisterForm />
@@ -40,14 +36,6 @@ const styles = StyleSheet.create({
   formContainer: {
     width: '75%',
     marginTop: 30,
-  },
-  title: {
-    fontSize: 22.5,
-  },
-  subtitle: {
-    fontSize: 17,
-    marginVertical: 2.5,
-    marginBottom: 10,
   },
   backBtn: {
     marginTop: 10,

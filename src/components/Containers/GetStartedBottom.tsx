@@ -1,11 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import appColors from '../../styles/appColors';
 import GetStartedButton from '../Buttons/GetStartedButton';
+import {StartAppType} from '../../screens/InitialScreen';
+import FadeAnimWrapper from '../../wrapper/HOC/FadeAnimWrapper';
 
-const GetStartedBottom: React.FC = () => {
+const GetStartedBottom: React.FC<StartAppType> = ({handleStartApp}) => {
   return (
-    <View style={styles.container}>
+    <FadeAnimWrapper wrapperStyle={styles.container}>
       {/* Title */}
       <Text style={styles.title}>Trip Saver</Text>
 
@@ -15,8 +17,8 @@ const GetStartedBottom: React.FC = () => {
       </Text>
 
       {/* Button to Form */}
-      <GetStartedButton />
-    </View>
+      <GetStartedButton handleStartApp={handleStartApp} />
+    </FadeAnimWrapper>
   );
 };
 

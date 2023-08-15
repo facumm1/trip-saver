@@ -1,40 +1,51 @@
 import React, {useContext} from 'react';
-import {StyleSheet, TextInput} from 'react-native';
+import {View} from 'react-native';
 import LoginDataContext from '../../context/LoginDataContext';
 import {AuthFormTypes, loginValues} from '../../util/AuthFormValues';
-import {CredentialsTypes} from '../../hooks/useLoginData';
+import LoginFieldName from '../Text/LoginFieldName';
+import HidePasswordButton from '../Buttons/HidePasswordButton';
+import LoginField from '../TextField/LoginField';
+import useFormField from '../../hooks/useFormField';
 
-const LoginForm: React.FC = () => {
-  const {errorMessage, credentials, handleErrorMsg, handleCredentials} =
-    useContext(LoginDataContext);
-
-  //TODO cambiar key de fragment, revisar type de inputName
-  return (
-    <>
-      {loginValues.map(({inputName, placeholder}: AuthFormTypes, index) => (
-        <TextInput
-          key={index}
-          onFocus={() => errorMessage.length > 0 && handleErrorMsg('')}
-          onChangeText={text =>
-            handleCredentials(inputName as keyof CredentialsTypes, text)
-          }
-          value={credentials[inputName as keyof CredentialsTypes]}
-          style={styles.input}
-          placeholder={placeholder}
-        />
-      ))}
-    </>
-  );
+export type FieldActiveTypes = {
+  email: boolean;
+  password: boolean;
 };
 
-const styles = StyleSheet.create({
-  input: {
-    borderWidth: 0.7,
-    borderRadius: 10,
-    paddingLeft: 10,
-    width: '100%',
-    marginTop: 25,
-  },
-});
+const LoginForm: React.FC = () => {
+  const {errorMessage, handleErrorMsg, credentials, handleCredentials} =
+    useContext(LoginDataContext);
+
+  const formFieldHook = useFormField();
+
+  //TODO cambiar key de fragment, revisar type de loginValues (genericos)
+
+  //TODO refactor la view de login y hide
+  return (
+    <View>
+      {loginValues.map((data: AuthFormTypes, index) => (
+        <View key={index} style={{marginBottom: 20}}>
+          <LoginFieldName inputText={data.inputText} />
+          <View>
+            {/* Text field */}
+            <LoginField
+              inputName={data.inputName}
+              placeholder={data.placeholder}
+              credentials={credentials}
+              handleCredentials={handleCredentials}
+              {...formFieldHook}
+            />
+
+            {/* Boton */}
+            <HidePasswordButton
+              inputName={data.inputName}
+              handleHidePassword={formFieldHook.handleHidePassword}
+            />
+          </View>
+        </View>
+      ))}
+    </View>
+  );
+};
 
 export default LoginForm;

@@ -1,17 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import appColors from '../../styles/appColors';
+import RightArrowIcon from '../Icons/RightArrowIcon';
+import {StartAppType} from '../../screens/InitialScreen';
 
-const GetStartedButton: React.FC = () => {
+const GetStartedButton: React.FC<StartAppType> = ({handleStartApp}) => {
   return (
-    <TouchableOpacity style={styles.btn}>
+    <TouchableOpacity onPress={handleStartApp} style={styles.btn}>
       <Text style={styles.text}>Comenzar ahora</Text>
-      <MaterialIcons
-        name="keyboard-arrow-right"
-        size={17.5}
-        color={appColors.darkBlue}
-      />
+      <RightArrowIcon iconSize={17.5} />
     </TouchableOpacity>
   );
 };
