@@ -1,10 +1,8 @@
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import appColors from '../../styles/appColors';
+import {GoogleButton} from '../Buttons';
 import LoginForm from '../Forms/LoginForm';
-import LoginDataProvider from '../../context/LoginDataProvider';
-import LoginErrorMsg from '../Text/LoginErrorMsg';
-import {ChangeFormButton, GoogleButton, LoginButton} from '../Buttons';
 
 type Props = {
   handleChangeForm: () => void;
@@ -12,36 +10,26 @@ type Props = {
 
 const LoginContainer: React.FC<Props> = ({handleChangeForm}) => {
   return (
-    <>
+    <View style={styles.container}>
       <View style={styles.content}>
-        <View style={styles.formContainer}>
-          {/* Form */}
-          <LoginDataProvider>
-            <LoginForm />
+        {/* Form */}
+        <LoginForm handleChangeForm={handleChangeForm} />
 
-            <ChangeFormButton handleChangeForm={handleChangeForm} />
+        <Text style={styles.optionText}>O también</Text>
 
-            <LoginErrorMsg />
-
-            <LoginButton />
-          </LoginDataProvider>
-
-          <Text style={styles.optionText}>O también</Text>
-
-          {/* Google OAuth */}
-          <GoogleButton />
-        </View>
+        {/* Google OAuth */}
+        <GoogleButton />
       </View>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  content: {
+  container: {
     alignItems: 'center',
     backgroundColor: appColors.white,
   },
-  formContainer: {
+  content: {
     width: '75%',
     marginTop: 30,
   },

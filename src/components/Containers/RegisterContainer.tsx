@@ -1,9 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import RegisterForm from '../Forms/RegisterForm';
 import appColors from '../../styles/appColors';
-import RegisterButton from '../Buttons/RegisterButton';
-import RegisterDataProvider from '../../context/RegisterDataProvider';
+import RegisterForm from '../Forms/RegisterForm';
 
 type Props = {handleChangeForm: () => void};
 
@@ -12,16 +10,11 @@ const RegisterContainer: React.FC<Props> = ({handleChangeForm}) => {
     <>
       <View style={styles.content}>
         <View style={styles.formContainer}>
-          {/* Form */}
-          <RegisterDataProvider>
-            <RegisterForm />
+          <RegisterForm />
 
-            <RegisterButton />
-
-            <TouchableOpacity onPress={handleChangeForm} style={styles.backBtn}>
-              <Text style={styles.backBtnText}>Volver</Text>
-            </TouchableOpacity>
-          </RegisterDataProvider>
+          <TouchableOpacity onPress={handleChangeForm} style={styles.backBtn}>
+            <Text style={styles.backBtnText}>Volver</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </>

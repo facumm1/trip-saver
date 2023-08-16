@@ -3,8 +3,7 @@ import {CredentialsTypes} from '../hooks/useLoginData';
 export interface AuthFormTypes {
   inputName: keyof CredentialsTypes | string;
   placeholder: string;
-  inputText?: string;
-  errorMsg?: string;
+  inputText: string;
 }
 
 export const loginValues: AuthFormTypes[] = [
@@ -20,7 +19,11 @@ export const loginValues: AuthFormTypes[] = [
   },
 ];
 
-export const registerValues: AuthFormTypes[] = [
+export interface RegisterTypes extends AuthFormTypes {
+  errorMsg: string;
+}
+
+export const registerValues: RegisterTypes[] = [
   {
     inputName: 'fullName',
     inputText: 'Nombre completo',
@@ -31,7 +34,7 @@ export const registerValues: AuthFormTypes[] = [
     inputName: 'email',
     inputText: 'Tu correo electrónico',
     placeholder: 'robertocostas@gmail.com',
-    errorMsg: 'El email debe tener al menos una arroba.',
+    errorMsg: 'El email debe ser válido.',
   },
   {
     inputName: 'password',

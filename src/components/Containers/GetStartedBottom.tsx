@@ -8,15 +8,12 @@ import FadeAnimWrapper from '../../wrapper/HOC/FadeAnimWrapper';
 const GetStartedBottom: React.FC<StartAppType> = ({handleStartApp}) => {
   return (
     <FadeAnimWrapper wrapperStyle={styles.container}>
-      {/* Title */}
       <Text style={styles.title}>Trip Saver</Text>
 
-      {/* Text */}
       <Text style={styles.text}>
         Una aplicación para ayudarte con tus viajes.
       </Text>
 
-      {/* Button to Form */}
       <GetStartedButton handleStartApp={handleStartApp} />
     </FadeAnimWrapper>
   );

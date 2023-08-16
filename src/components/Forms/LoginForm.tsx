@@ -1,50 +1,21 @@
-import React, {useContext} from 'react';
-import {View} from 'react-native';
-import LoginDataContext from '../../context/LoginDataContext';
-import {AuthFormTypes, loginValues} from '../../util/AuthFormValues';
-import LoginFieldName from '../Text/LoginFieldName';
-import HidePasswordButton from '../Buttons/HidePasswordButton';
-import LoginField from '../TextField/LoginField';
-import useFormField from '../../hooks/useFormField';
+import React from 'react';
+import LoginDataProvider from '../../context/LoginDataProvider';
+import {ChangeFormButton, LoginButton} from '../Buttons';
+import LoginFieldContainer from '../Forms/LoginFieldContainer';
 
-export type FieldActiveTypes = {
-  email: boolean;
-  password: boolean;
+type Props = {
+  handleChangeForm: () => void;
 };
 
-const LoginForm: React.FC = () => {
-  const {errorMessage, handleErrorMsg, credentials, handleCredentials} =
-    useContext(LoginDataContext);
-
-  const formFieldHook = useFormField();
-
-  //TODO cambiar key de fragment, revisar type de loginValues (genericos)
-
-  //TODO refactor la view de login y hide
+const LoginForm: React.FC<Props> = ({handleChangeForm}) => {
   return (
-    <View>
-      {loginValues.map((data: AuthFormTypes, index) => (
-        <View key={index} style={{marginBottom: 20}}>
-          <LoginFieldName inputText={data.inputText} />
-          <View>
-            {/* Text field */}
-            <LoginField
-              inputName={data.inputName}
-              placeholder={data.placeholder}
-              credentials={credentials}
-              handleCredentials={handleCredentials}
-              {...formFieldHook}
-            />
+    <LoginDataProvider>
+      <LoginFieldContainer />
 
-            {/* Boton */}
-            <HidePasswordButton
-              inputName={data.inputName}
-              handleHidePassword={formFieldHook.handleHidePassword}
-            />
-          </View>
-        </View>
-      ))}
-    </View>
+      <ChangeFormButton handleChangeForm={handleChangeForm} />
+
+      <LoginButton />
+    </LoginDataProvider>
   );
 };
 

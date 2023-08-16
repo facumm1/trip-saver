@@ -12,7 +12,7 @@ const LoginButton: React.FC = () => {
 
   const handleLogin = async () => {
     if (!validateLoginData(credentials)) {
-      handleErrorMsg('Email o contraseña con pocos caracteres.');
+      handleErrorMsg('Email o contraseña inválidos o incorrectos.');
       return;
     }
 

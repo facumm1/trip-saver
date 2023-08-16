@@ -1,33 +1,36 @@
 import React from 'react';
-import {StyleSheet, TextInput} from 'react-native';
-import {CredentialsTypes} from '../../hooks/useLoginData';
+import {StyleSheet} from 'react-native';
+import {TextInput} from 'react-native-gesture-handler';
+import {RegisterCredentialsTypes} from '../../hooks/useRegisterData';
 import appColors from '../../styles/appColors';
 
-type FieldActiveTypes = {
+export type FieldActiveTypes = {
   email: boolean;
   password: boolean;
 };
 
 type Props = {
   inputName: string;
-  credentials: CredentialsTypes;
+  registerCred: RegisterCredentialsTypes;
   placeholder: string;
   hidePassword: boolean;
   fieldActive: FieldActiveTypes;
   handleActiveField: (inputName: string) => void;
-  handleCredentials: (key: keyof CredentialsTypes, value: string) => void;
+  handleRegisterCred: (
+    key: keyof RegisterCredentialsTypes,
+    value: string,
+  ) => void;
 };
 
-const LoginField: React.FC<Props> = ({
+const RegisterField: React.FC<Props> = ({
   inputName,
-  credentials,
+  registerCred,
   placeholder,
   hidePassword,
   fieldActive,
+  handleRegisterCred,
   handleActiveField,
-  handleCredentials,
 }) => {
-  //TODO refactor props
   const isFieldActive = fieldActive[inputName as keyof FieldActiveTypes]
     ? appColors.darkBlue
     : appColors.gray;
@@ -42,7 +45,7 @@ const LoginField: React.FC<Props> = ({
 
   const handleOnFocus = () => {
     handleActiveField(inputName);
-    //errorMessage.length > 0 && handleErrorMsg('');
+    //showErrorMsg && handleShowError();
   };
 
   const handleOnBlur = () => {
@@ -50,14 +53,14 @@ const LoginField: React.FC<Props> = ({
   };
 
   const handleOnChangeText = (text: string) =>
-    handleCredentials(inputName as keyof CredentialsTypes, text);
+    handleRegisterCred(inputName as keyof RegisterCredentialsTypes, text);
 
   return (
     <TextInput
       onFocus={handleOnFocus}
       onBlur={handleOnBlur}
       onChangeText={handleOnChangeText}
-      value={credentials[inputName as keyof CredentialsTypes]}
+      value={registerCred[inputName as keyof RegisterCredentialsTypes]}
       style={fieldStyles}
       placeholder={placeholder}
       {...showPwdIcon}
@@ -66,6 +69,11 @@ const LoginField: React.FC<Props> = ({
 };
 
 const styles = StyleSheet.create({
+  title: {
+    color: appColors.darkBlue,
+    fontWeight: '500',
+    marginBottom: 10,
+  },
   input: {
     borderWidth: 1,
     borderRadius: 50,
@@ -74,6 +82,13 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 0,
   },
+  backBtn: {
+    marginTop: 10,
+    alignSelf: 'center',
+    paddingVertical: 2.5,
+    paddingHorizontal: 15,
+  },
+  errorMsg: {color: '#ff0008'},
 });
 
-export default LoginField;
+export default RegisterField;

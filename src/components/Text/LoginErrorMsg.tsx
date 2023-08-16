@@ -9,7 +9,12 @@ const LoginErrorMsg: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  loginErrorMsg: {marginTop: 5, color: '#ff0008'},
+  loginErrorMsg: {
+    alignSelf: 'center',
+    color: '#ff0008',
+    fontSize: 13,
+    marginBottom: 10,
+  },
 });
 
 export default LoginErrorMsg;
