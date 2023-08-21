@@ -1,49 +1,54 @@
-import React, {useContext} from 'react';
-import {View} from 'react-native';
-import LoginDataContext from '../../context/LoginDataContext';
-import {AuthFormTypes, loginValues} from '../../util/AuthFormValues';
-import LoginFieldName from '../Text/LoginFieldName';
-import HidePasswordButton from '../Buttons/HidePasswordButton';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import {Control, FieldErrors} from 'react-hook-form';
+
+import {LoginFieldName, LoginErrorMsg} from '../Text';
 import LoginField from '../TextField/LoginField';
-import useFormField from '../../hooks/useFormField';
-import LoginErrorMsg from '../Text/LoginErrorMsg';
 
-const LoginFieldContainer: React.FC = () => {
-  const {errorMessage, handleErrorMsg, credentials, handleCredentials} =
-    useContext(LoginDataContext);
+import {AuthFormTypes, loginValues} from '../../util/AuthFormValues';
+import HidePasswordButton from '../Buttons/HidePasswordButton';
+import {useFormField, useToggle} from '../../hooks';
 
-  const formFieldHook = useFormField();
+type Props = {
+  control: Control<any>;
+  errors: FieldErrors;
+};
 
-  //TODO cambiar key de fragment, revisar type de loginValues (genericos)
-  //TODO refactor la view de login y hide
+const hidePwdBtn = (handleHidePassword: () => void): JSX.Element => (
+  <HidePasswordButton handleHidePassword={handleHidePassword} />
+);
+
+const LoginFieldContainer: React.FC<Props> = ({control, errors}) => {
+  const {open: hidePassword, handleOpen: handleHidePassword} = useToggle(true);
+  const {fieldActive, handleActiveField} = useFormField();
+
+  //TODO refactor
   return (
     <View>
       {loginValues.map((data: AuthFormTypes) => (
-        <View key={data.inputName} style={{marginBottom: 10}}>
-          {/* Title */}
+        <View key={data.inputName} style={styles.fieldContainer}>
           <LoginFieldName inputText={data.inputText} />
-
           <View>
             <LoginField
               inputName={data.inputName}
               placeholder={data.placeholder}
-              credentials={credentials}
-              handleCredentials={handleCredentials}
-              {...formFieldHook}
+              control={control}
+              hidePassword={hidePassword}
+              fieldActive={fieldActive}
+              handleActiveField={handleActiveField}
             />
 
-            {/* Boton */}
-            <HidePasswordButton
-              inputName={data.inputName}
-              handleHidePassword={formFieldHook.handleHidePassword}
-            />
+            {data.inputName === 'password' && hidePwdBtn(handleHidePassword)}
           </View>
+          <LoginErrorMsg inputName={data.inputName} errors={errors} />
         </View>
       ))}
-
-      <LoginErrorMsg />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  fieldContainer: {marginBottom: 10},
+});
 
 export default LoginFieldContainer;

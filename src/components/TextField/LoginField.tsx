@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet, TextInput} from 'react-native';
-import {CredentialsTypes} from '../../hooks/useLoginData';
 import appColors from '../../styles/appColors';
+import {Control, Controller} from 'react-hook-form';
+import {emailRules, passwordRules} from '../../util/FieldRules';
 
 type FieldActiveTypes = {
   email: boolean;
@@ -10,57 +11,54 @@ type FieldActiveTypes = {
 
 type Props = {
   inputName: string;
-  credentials: CredentialsTypes;
   placeholder: string;
   hidePassword: boolean;
   fieldActive: FieldActiveTypes;
+  control: Control<any>;
   handleActiveField: (inputName: string) => void;
-  handleCredentials: (key: keyof CredentialsTypes, value: string) => void;
 };
 
 const LoginField: React.FC<Props> = ({
   inputName,
-  credentials,
   placeholder,
   hidePassword,
   fieldActive,
+  control,
   handleActiveField,
-  handleCredentials,
 }) => {
-  //TODO refactor props
+  //TODO refactor & make presentational component here
+
   const isFieldActive = fieldActive[inputName as keyof FieldActiveTypes]
     ? appColors.darkBlue
     : appColors.gray;
-
-  const showPwdIcon =
-    inputName === 'password' ? {secureTextEntry: hidePassword} : {};
 
   const fieldStyles = {
     ...styles.input,
     borderColor: isFieldActive,
   };
 
-  const handleOnFocus = () => {
-    handleActiveField(inputName);
-    //errorMessage.length > 0 && handleErrorMsg('');
-  };
-
-  const handleOnBlur = () => {
-    handleActiveField(inputName);
-  };
-
-  const handleOnChangeText = (text: string) =>
-    handleCredentials(inputName as keyof CredentialsTypes, text);
+  const showPwdIcon =
+    inputName === 'password' ? {secureTextEntry: hidePassword} : {};
 
   return (
-    <TextInput
-      onFocus={handleOnFocus}
-      onBlur={handleOnBlur}
-      onChangeText={handleOnChangeText}
-      value={credentials[inputName as keyof CredentialsTypes]}
-      style={fieldStyles}
-      placeholder={placeholder}
-      {...showPwdIcon}
+    <Controller
+      name={inputName}
+      control={control}
+      rules={inputName === 'email' ? emailRules : passwordRules}
+      render={({field: {onChange, onBlur, value}}) => (
+        <TextInput
+          onFocus={() => handleActiveField(inputName)}
+          onBlur={() => {
+            onBlur();
+            handleActiveField(inputName);
+          }}
+          onChangeText={onChange}
+          value={value}
+          style={fieldStyles}
+          placeholder={placeholder}
+          {...showPwdIcon}
+        />
+      )}
     />
   );
 };

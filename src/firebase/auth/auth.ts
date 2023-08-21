@@ -40,7 +40,7 @@ export const userRegistering = async ({
 };
 
 export const userLogging = async ({email, password}: Credentials) => {
-  const navigation: NavigationProp<any, 'MainScreen'> = useNavigation();
+  //const navigation: NavigationProp<any, 'MainScreen'> = useNavigation();
 
   try {
     console.log('User account signed in. Storing personal data...');
@@ -59,7 +59,7 @@ export const userLogging = async ({email, password}: Credentials) => {
       error.code === 'auth/user-not-found' ||
       error.code === 'auth/wrong-password'
     ) {
-      console.warn('El usuario no se encuentra registrado.');
+      console.warn('Email o contraseña incorrectos.');
       //handleErrorMsg('El usuario no se encuentra registrado.');
       return;
     }

@@ -1,19 +1,25 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {StyleSheet, Text} from 'react-native';
-import LoginDataContext from '../../context/LoginDataContext';
+import {FieldErrors} from 'react-hook-form';
 
-const LoginErrorMsg: React.FC = () => {
-  const {errorMessage} = useContext(LoginDataContext);
+type Props = {
+  inputName: string;
+  errors: FieldErrors;
+};
 
-  return <Text style={styles.loginErrorMsg}>{errorMessage}</Text>;
+const LoginErrorMsg: React.FC<Props> = ({inputName, errors}) => {
+  //TODO fix undefined keyof problem here
+  const errorMsg = errors[inputName] ? errors[inputName].message : '';
+
+  return <Text style={styles.loginErrorMsg}>{errorMsg}</Text>;
 };
 
 const styles = StyleSheet.create({
   loginErrorMsg: {
-    alignSelf: 'center',
+    paddingLeft: 15,
     color: '#ff0008',
     fontSize: 13,
-    marginBottom: 10,
+    marginTop: 5,
   },
 });
 

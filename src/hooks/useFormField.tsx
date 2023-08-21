@@ -6,22 +6,15 @@ type FieldActiveTypes = {
 };
 
 export type UseFormFieldTypes = {
-  hidePassword: boolean;
   fieldActive: FieldActiveTypes;
-  handleHidePassword: () => void;
   handleActiveField: (inputName: string) => void;
 };
 
 const useFormField = (): UseFormFieldTypes => {
-  const [hidePassword, setHidePassword] = useState<boolean>(true);
   const [fieldActive, setFieldActive] = useState<FieldActiveTypes>({
     email: false,
     password: false,
   });
-
-  const handleHidePassword = (): void => {
-    setHidePassword(!hidePassword);
-  };
 
   const handleActiveField = (inputName: string): void => {
     setFieldActive(prevFieldActive => ({
@@ -31,8 +24,6 @@ const useFormField = (): UseFormFieldTypes => {
   };
 
   return {
-    hidePassword,
-    handleHidePassword,
     fieldActive,
     handleActiveField,
   };

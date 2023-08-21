@@ -1,21 +1,36 @@
 import React from 'react';
-import LoginDataProvider from '../../context/LoginDataProvider';
 import {ChangeFormButton, LoginButton} from '../Buttons';
 import LoginFieldContainer from '../Forms/LoginFieldContainer';
+import {useForm} from 'react-hook-form';
 
 type Props = {
   handleChangeForm: () => void;
 };
+export interface LoginValueTypes {
+  email: string;
+  password: string;
+}
 
 const LoginForm: React.FC<Props> = ({handleChangeForm}) => {
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<LoginValueTypes>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
   return (
-    <LoginDataProvider>
-      <LoginFieldContainer />
+    <>
+      <LoginFieldContainer control={control} errors={errors} />
 
       <ChangeFormButton handleChangeForm={handleChangeForm} />
 
-      <LoginButton />
-    </LoginDataProvider>
+      <LoginButton handleSubmit={handleSubmit} />
+    </>
   );
 };
 

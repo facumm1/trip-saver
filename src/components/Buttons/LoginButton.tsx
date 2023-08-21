@@ -1,33 +1,28 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {validateLoginData} from '../../helpers/loginHandlers';
-import LoginDataContext from '../../context/LoginDataContext';
+import {UseFormHandleSubmit} from 'react-hook-form';
+
 import {userLogging} from '../../firebase/auth/auth';
+
 import appColors from '../../styles/appColors';
 import RightArrowIcon from '../Icons/RightArrowIcon';
+import {LoginValueTypes} from '../Forms/LoginForm';
 
-const LoginButton: React.FC = () => {
-  //TODO terminar refactor de este componente
-  const {credentials, handleErrorMsg} = useContext(LoginDataContext);
+type Props = {
+  handleSubmit: UseFormHandleSubmit<LoginValueTypes>;
+};
 
-  const handleLogin = async () => {
-    if (!validateLoginData(credentials)) {
-      handleErrorMsg('Email o contraseña inválidos o incorrectos.');
-      return;
-    }
-
-    const {email, password} = credentials;
-
-    console.log('Se logro iniciar sesion con', email, password);
-
+const LoginButton: React.FC<Props> = ({handleSubmit}) => {
+  const handleLogin = async (credentials: LoginValueTypes) => {
+    console.log(credentials);
     await userLogging(credentials);
   };
 
   //TODO fixear position absolute
   return (
-    <TouchableOpacity onPress={handleLogin} style={styles.btn}>
+    <TouchableOpacity onPress={handleSubmit(handleLogin)} style={styles.btn}>
       <Text style={styles.text}>Iniciar sesión</Text>
-      <View style={{position: 'absolute', right: 10, bottom: 12}}>
+      <View style={styles.iconContainer}>
         <RightArrowIcon iconSize={17.5} />
       </View>
     </TouchableOpacity>
@@ -49,6 +44,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: appColors.darkBlue,
     textAlign: 'center',
+  },
+  iconContainer: {
+    position: 'absolute',
+    right: 10,
+    bottom: 12,
   },
 });
 
