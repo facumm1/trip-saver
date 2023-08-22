@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {UseFormHandleSubmit} from 'react-hook-form';
 
-import {userLogging} from '../../firebase/auth/auth';
+import {loginToFirebase} from '../../auth/auth';
 
 import appColors from '../../styles/appColors';
 import RightArrowIcon from '../Icons/RightArrowIcon';
@@ -10,12 +10,18 @@ import {LoginValueTypes} from '../Forms/LoginForm';
 
 type Props = {
   handleSubmit: UseFormHandleSubmit<LoginValueTypes>;
+  handleAuthError: () => void;
 };
 
-const LoginButton: React.FC<Props> = ({handleSubmit}) => {
+const LoginButton: React.FC<Props> = ({handleSubmit, handleAuthError}) => {
   const handleLogin = async (credentials: LoginValueTypes) => {
     console.log(credentials);
-    await userLogging(credentials);
+    const authResponse = await loginToFirebase(credentials);
+
+    if (!authResponse) {
+      handleAuthError();
+      return;
+    }
   };
 
   //TODO fixear position absolute
@@ -35,7 +41,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
     backgroundColor: appColors.green,
-    marginTop: 12,
     borderRadius: 50,
     paddingVertical: 12.5,
   },

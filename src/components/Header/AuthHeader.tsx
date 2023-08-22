@@ -19,7 +19,7 @@ const AuthHeader: React.FC<{showRegister: boolean}> = ({showRegister}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {marginBottom: 40},
+  container: {marginBottom: 35},
   header: {
     alignItems: 'center',
     flexDirection: 'row',

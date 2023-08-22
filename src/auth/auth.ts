@@ -39,31 +39,32 @@ export const userRegistering = async ({
   }
 };
 
-export const userLogging = async ({email, password}: Credentials) => {
+export const loginToFirebase = async ({email, password}: Credentials) => {
   //const navigation: NavigationProp<any, 'MainScreen'> = useNavigation();
 
   try {
-    console.log('User account signed in. Storing personal data...');
-
     await auth().signInWithEmailAndPassword(email, password);
+
+    console.log('User account signed in. Storing personal data...');
 
     const user = auth().currentUser;
     const uuid = user?.uid;
 
-    await AsyncStorage.setItem('fullName', user?.displayName || '');
-    await AsyncStorage.setItem('id', uuid || '');
+    /* await AsyncStorage.setItem('fullName', user?.displayName || '');
+    await AsyncStorage.setItem('id', uuid || ''); */
 
     //navigation.navigate('MainScreen');
+    return true;
   } catch (error: any) {
     if (
       error.code === 'auth/user-not-found' ||
       error.code === 'auth/wrong-password'
     ) {
-      console.warn('Email o contraseña incorrectos.');
-      //handleErrorMsg('El usuario no se encuentra registrado.');
-      return;
+      console.log('Email o contraseña incorrectos.');
+      return false;
     }
 
     console.error('Error:', error.code);
+    return false;
   }
 };

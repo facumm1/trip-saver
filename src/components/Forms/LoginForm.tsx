@@ -1,17 +1,16 @@
 import React from 'react';
-import {ChangeFormButton, LoginButton} from '../Buttons';
+import {LoginButton} from '../Buttons';
 import LoginFieldContainer from '../Forms/LoginFieldContainer';
 import {useForm} from 'react-hook-form';
+import {useToggle} from '../../hooks';
+import AuthErrorModal from '../Error/AuthErrorModal';
 
-type Props = {
-  handleChangeForm: () => void;
-};
 export interface LoginValueTypes {
   email: string;
   password: string;
 }
 
-const LoginForm: React.FC<Props> = ({handleChangeForm}) => {
+const LoginForm: React.FC = () => {
   const {
     control,
     handleSubmit,
@@ -23,13 +22,16 @@ const LoginForm: React.FC<Props> = ({handleChangeForm}) => {
     },
   });
 
+  const {open: authError, handleOpen: handleAuthError} = useToggle();
+
   return (
     <>
       <LoginFieldContainer control={control} errors={errors} />
-
-      <ChangeFormButton handleChangeForm={handleChangeForm} />
-
-      <LoginButton handleSubmit={handleSubmit} />
+      <LoginButton
+        handleSubmit={handleSubmit}
+        handleAuthError={handleAuthError}
+      />
+      <AuthErrorModal authError={authError} handleAuthError={handleAuthError} />
     </>
   );
 };
