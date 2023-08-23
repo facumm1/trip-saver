@@ -1,69 +1,51 @@
-import React, {useContext} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {RegisterTypes, registerValues} from '../../util/AuthFormValues';
-import RegisterDataContext from '../../context/RegisterDataContext';
-import appColors from '../../styles/appColors';
-import useFormField from '../../hooks/useFormField';
+import React from 'react';
+import {View} from 'react-native';
+import {Control, FieldErrors} from 'react-hook-form';
+
+import {LoginErrorMsg, LoginFieldName} from '../Text';
 import RegisterField from '../TextField/RegisterField';
+
+import {RegisterTypes, registerValues} from '../../util/AuthFormValues';
 import HidePasswordButton from '../Buttons/HidePasswordButton';
-import LoginFieldName from '../Text/LoginFieldName';
+import {useFormField, useToggle} from '../../hooks';
 
-const RegisterFieldContainer: React.FC = () => {
-  const {showErrorMsg, registerCred, handleShowError, handleRegisterCred} =
-    useContext(RegisterDataContext);
+type Props = {
+  control: Control<any>;
+  errors: FieldErrors;
+};
 
-  const formFieldHook = useFormField();
+const hidePwdBtn = (handleHidePassword: () => void): JSX.Element => (
+  <HidePasswordButton handleHidePassword={handleHidePassword} />
+);
+
+const RegisterFieldContainer: React.FC<Props> = ({control, errors}) => {
+  const {open: hidePassword, handleOpen: handleHidePassword} = useToggle(true);
+  const {fieldActive, handleActiveField} = useFormField();
 
   return (
-    <>
+    <View>
       {registerValues.map((data: RegisterTypes) => (
         <View key={data.inputName}>
-          {/* Title */}
           <LoginFieldName inputText={data.inputText} />
 
           <View>
             <RegisterField
               inputName={data.inputName}
               placeholder={data.placeholder}
-              registerCred={registerCred}
-              handleRegisterCred={handleRegisterCred}
-              {...formFieldHook}
+              control={control}
+              hidePassword={hidePassword}
+              fieldActive={fieldActive}
+              handleActiveField={handleActiveField}
             />
 
-            <HidePasswordButton
-              inputName={data.inputName}
-              handleHidePassword={formFieldHook.handleHidePassword}
-            />
+            {data.inputName === 'password' && hidePwdBtn(handleHidePassword)}
           </View>
 
-          <Text style={styles.errorMsg}>{showErrorMsg && data.errorMsg}</Text>
+          <LoginErrorMsg inputName={data.inputName} errors={errors} />
         </View>
       ))}
-    </>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  title: {
-    color: appColors.darkBlue,
-    fontWeight: '500',
-    marginBottom: 10,
-  },
-  input: {
-    borderWidth: 1,
-    borderRadius: 50,
-    color: appColors.darkBlue,
-    paddingLeft: 17.5,
-    width: '100%',
-    marginTop: 0,
-  },
-  backBtn: {
-    marginTop: 10,
-    alignSelf: 'center',
-    paddingVertical: 2.5,
-    paddingHorizontal: 15,
-  },
-  errorMsg: {fontSize: 13, color: '#ff0008', marginTop: 0, marginBottom: 10},
-});
 
 export default RegisterFieldContainer;

@@ -1,69 +1,74 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
-import {RegisterCredentialsTypes} from '../../hooks/useRegisterData';
-import appColors from '../../styles/appColors';
+import {StyleSheet, TextInput} from 'react-native';
+import {Control, Controller} from 'react-hook-form';
 
-export type FieldActiveTypes = {
+import appColors from '../../styles/appColors';
+import {emailRules, fullNameRules, passwordRules} from '../../util/FieldRules';
+
+type FieldActiveTypes = {
   email: boolean;
   password: boolean;
+  fullName: boolean;
 };
 
 type Props = {
   inputName: string;
-  registerCred: RegisterCredentialsTypes;
   placeholder: string;
   hidePassword: boolean;
   fieldActive: FieldActiveTypes;
+  control: Control<any>;
   handleActiveField: (inputName: string) => void;
-  handleRegisterCred: (
-    key: keyof RegisterCredentialsTypes,
-    value: string,
-  ) => void;
 };
 
 const RegisterField: React.FC<Props> = ({
   inputName,
-  registerCred,
   placeholder,
   hidePassword,
   fieldActive,
-  handleRegisterCred,
+  control,
   handleActiveField,
 }) => {
   const isFieldActive = fieldActive[inputName as keyof FieldActiveTypes]
     ? appColors.darkBlue
     : appColors.gray;
 
-  const showPwdIcon =
-    inputName === 'password' ? {secureTextEntry: hidePassword} : {};
-
   const fieldStyles = {
     ...styles.input,
     borderColor: isFieldActive,
   };
 
-  const handleOnFocus = () => {
-    handleActiveField(inputName);
-    //showErrorMsg && handleShowError();
-  };
+  const showPwdIcon =
+    inputName === 'password' ? {secureTextEntry: hidePassword} : {};
 
-  const handleOnBlur = () => {
-    handleActiveField(inputName);
+  const handleFieldRules = () => {
+    if (inputName === 'email') {
+      return emailRules;
+    } else if (inputName === 'password') {
+      return passwordRules;
+    } else {
+      return fullNameRules;
+    }
   };
-
-  const handleOnChangeText = (text: string) =>
-    handleRegisterCred(inputName as keyof RegisterCredentialsTypes, text);
 
   return (
-    <TextInput
-      onFocus={handleOnFocus}
-      onBlur={handleOnBlur}
-      onChangeText={handleOnChangeText}
-      value={registerCred[inputName as keyof RegisterCredentialsTypes]}
-      style={fieldStyles}
-      placeholder={placeholder}
-      {...showPwdIcon}
+    <Controller
+      name={inputName}
+      control={control}
+      rules={handleFieldRules()}
+      render={({field: {onChange, onBlur, value}}) => (
+        <TextInput
+          onFocus={() => handleActiveField(inputName)}
+          onBlur={() => {
+            onBlur();
+            handleActiveField(inputName);
+          }}
+          onChangeText={onChange}
+          value={value}
+          style={fieldStyles}
+          placeholder={placeholder}
+          {...showPwdIcon}
+        />
+      )}
     />
   );
 };

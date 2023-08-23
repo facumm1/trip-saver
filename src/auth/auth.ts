@@ -13,13 +13,14 @@ type Credentials = {
   password: string;
 };
 
-export const userRegistering = async ({
+export const registerToFirebase = async ({
   fullName,
   email,
   password,
-}: Credentials): Promise<void> => {
+}: Credentials) => {
+  //TODO revisar types de credentials
   try {
-    console.log('Registrando usuario!', fullName, email, password);
+    console.log('Registrando usuario:', fullName, email, password);
 
     const user = await createUserWithEmailAndPassword(email, password);
 
@@ -27,15 +28,20 @@ export const userRegistering = async ({
 
     await storeUserData(user, fullName as string, email, password);
 
-    await userLogging({email, password});
+    await loginToFirebase({email, password});
+
+    return true;
   } catch (error: any) {
     if (
       error.code === 'auth/email-already-in-use' ||
       error.code === 'auth/invalid-email'
     ) {
-      console.log(error.code);
+      console.log('El usuario ya se encuentra registrado.');
+      return false;
     }
+
     console.warn('Error:', error.code);
+    return false;
   }
 };
 
@@ -45,7 +51,7 @@ export const loginToFirebase = async ({email, password}: Credentials) => {
   try {
     await auth().signInWithEmailAndPassword(email, password);
 
-    console.log('User account signed in. Storing personal data...');
+    console.log('Iniciando sesion:', email, password);
 
     const user = auth().currentUser;
     const uuid = user?.uid;

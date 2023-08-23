@@ -1,15 +1,47 @@
 import React from 'react';
-import RegisterDataProvider from '../../context/RegisterDataProvider';
-import RegisterFieldContainer from './RegisterFieldContainer';
+import {useForm} from 'react-hook-form';
+
 import {RegisterButton} from '../Buttons';
+import RegisterFieldContainer from './RegisterFieldContainer';
+import {useToggle} from '../../hooks';
+import AuthErrorModal from '../Error/AuthErrorModal';
+
+export interface RegisterValueTypes {
+  email: string;
+  password: string;
+  fullName: string;
+}
 
 const RegisterForm: React.FC = () => {
-  return (
-    <RegisterDataProvider>
-      <RegisterFieldContainer />
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<RegisterValueTypes>({
+    defaultValues: {
+      email: '',
+      password: '',
+      fullName: '',
+    },
+  });
 
-      <RegisterButton />
-    </RegisterDataProvider>
+  const {open: authError, handleOpen: handleAuthError} = useToggle();
+
+  const errorMessage = 'El usuario ingresado ya se encuentra registrado.';
+
+  return (
+    <>
+      <RegisterFieldContainer control={control} errors={errors} />
+      <RegisterButton
+        handleSubmit={handleSubmit}
+        handleAuthError={handleAuthError}
+      />
+      <AuthErrorModal
+        errorMessage={errorMessage}
+        authError={authError}
+        handleAuthError={handleAuthError}
+      />
+    </>
   );
 };
 

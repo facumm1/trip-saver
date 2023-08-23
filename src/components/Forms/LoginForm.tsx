@@ -1,7 +1,8 @@
 import React from 'react';
+import {useForm} from 'react-hook-form';
+
 import {LoginButton} from '../Buttons';
 import LoginFieldContainer from '../Forms/LoginFieldContainer';
-import {useForm} from 'react-hook-form';
 import {useToggle} from '../../hooks';
 import AuthErrorModal from '../Error/AuthErrorModal';
 
@@ -24,6 +25,9 @@ const LoginForm: React.FC = () => {
 
   const {open: authError, handleOpen: handleAuthError} = useToggle();
 
+  const errorMessage =
+    'El usuario ingresado es incorrecto o no se encuentra registrado.';
+
   return (
     <>
       <LoginFieldContainer control={control} errors={errors} />
@@ -31,7 +35,11 @@ const LoginForm: React.FC = () => {
         handleSubmit={handleSubmit}
         handleAuthError={handleAuthError}
       />
-      <AuthErrorModal authError={authError} handleAuthError={handleAuthError} />
+      <AuthErrorModal
+        errorMessage={errorMessage}
+        authError={authError}
+        handleAuthError={handleAuthError}
+      />
     </>
   );
 };

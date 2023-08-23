@@ -24,3 +24,18 @@ export const passwordRules = {
   },
   pattern: {value: /^[a-zA-Z0-9]+$/, message: 'Contraseña inválida'},
 };
+
+export const fullNameRules = {
+  required: {
+    value: true,
+    message: 'La contraseña es requerida',
+  },
+  minLength: {
+    value: 6,
+    message: 'La contraseña debe ser mas larga',
+  },
+  pattern: {
+    value: /^[A-Za-zÁ-ÿ-]+(?:\s+[A-Za-zÁ-ÿ-]+)+$/,
+    message: 'Nombre inválido',
+  },
+};

@@ -4,9 +4,17 @@ import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import appColors from '../../styles/appColors';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-type Props = {authError: boolean; handleAuthError: () => void};
+type Props = {
+  errorMessage: string;
+  authError: boolean;
+  handleAuthError: () => void;
+};
 
-const AuthErrorModal: React.FC<Props> = ({authError, handleAuthError}) => {
+const AuthErrorModal: React.FC<Props> = ({
+  errorMessage,
+  authError,
+  handleAuthError,
+}) => {
   return (
     <Modal
       animationType="fade"
@@ -22,9 +30,7 @@ const AuthErrorModal: React.FC<Props> = ({authError, handleAuthError}) => {
               size={35}
               name="error-outline"
             />
-            <Text style={styles.text}>
-              El usuario ingresado es incorrecto o no se encuentra registrado.
-            </Text>
+            <Text style={styles.text}>{errorMessage} </Text>
           </View>
 
           <TouchableOpacity onPress={handleAuthError}>

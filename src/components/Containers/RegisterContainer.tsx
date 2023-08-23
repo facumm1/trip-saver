@@ -7,28 +7,25 @@ type Props = {handleChangeForm: () => void};
 
 const RegisterContainer: React.FC<Props> = ({handleChangeForm}) => {
   return (
-    <>
+    <View style={styles.container}>
       <View style={styles.content}>
-        <View style={styles.formContainer}>
-          <RegisterForm />
+        <RegisterForm />
 
-          <TouchableOpacity onPress={handleChangeForm} style={styles.backBtn}>
-            <Text style={styles.backBtnText}>Volver</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={handleChangeForm} style={styles.backBtn}>
+          <Text style={styles.backBtnText}>Volver</Text>
+        </TouchableOpacity>
       </View>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  content: {
+  container: {
     alignItems: 'center',
     backgroundColor: appColors.white,
   },
-  formContainer: {
+  content: {
     width: '75%',
-    marginTop: 30,
   },
   backBtn: {
     marginTop: 10,

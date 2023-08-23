@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet, TextInput} from 'react-native';
-import appColors from '../../styles/appColors';
 import {Control, Controller} from 'react-hook-form';
+
+import appColors from '../../styles/appColors';
 import {emailRules, passwordRules} from '../../util/FieldRules';
 
 type FieldActiveTypes = {
@@ -40,11 +41,18 @@ const LoginField: React.FC<Props> = ({
   const showPwdIcon =
     inputName === 'password' ? {secureTextEntry: hidePassword} : {};
 
+  const handleFieldRules = () => {
+    if (inputName === 'email') {
+      return emailRules;
+    }
+    return passwordRules;
+  };
+
   return (
     <Controller
       name={inputName}
       control={control}
-      rules={inputName === 'email' ? emailRules : passwordRules}
+      rules={handleFieldRules()}
       render={({field: {onChange, onBlur, value}}) => (
         <TextInput
           onFocus={() => handleActiveField(inputName)}

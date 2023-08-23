@@ -28,6 +28,7 @@ const LoginFieldContainer: React.FC<Props> = ({control, errors}) => {
       {loginValues.map((data: AuthFormTypes) => (
         <View key={data.inputName} style={styles.fieldContainer}>
           <LoginFieldName inputText={data.inputText} />
+
           <View>
             <LoginField
               inputName={data.inputName}
@@ -40,6 +41,7 @@ const LoginFieldContainer: React.FC<Props> = ({control, errors}) => {
 
             {data.inputName === 'password' && hidePwdBtn(handleHidePassword)}
           </View>
+
           <LoginErrorMsg inputName={data.inputName} errors={errors} />
         </View>
       ))}

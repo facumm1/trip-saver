@@ -3,6 +3,7 @@ import {useState} from 'react';
 type FieldActiveTypes = {
   email: boolean;
   password: boolean;
+  fullName: boolean;
 };
 
 export type UseFormFieldTypes = {
@@ -14,6 +15,7 @@ const useFormField = (): UseFormFieldTypes => {
   const [fieldActive, setFieldActive] = useState<FieldActiveTypes>({
     email: false,
     password: false,
+    fullName: false,
   });
 
   const handleActiveField = (inputName: string): void => {

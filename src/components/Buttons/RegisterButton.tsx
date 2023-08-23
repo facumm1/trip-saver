@@ -1,31 +1,34 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {UseFormHandleSubmit} from 'react-hook-form';
 
-import {validateRegisterData} from '../../helpers/loginHandlers';
-import RegisterDataContext from '../../context/RegisterDataContext';
-//import {registerNewUser} from '../../firebase/auth/auth';
+import {registerToFirebase} from '../../auth/auth';
+
 import appColors from '../../styles/appColors';
 import RightArrowIcon from '../Icons/RightArrowIcon';
+import {RegisterValueTypes} from '../Forms/RegisterForm';
 
-const RegisterButton: React.FC = () => {
-  const {registerCred: credentials, handleShowError} =
-    useContext(RegisterDataContext);
+type Props = {
+  handleSubmit: UseFormHandleSubmit<RegisterValueTypes>;
+  handleAuthError: () => void;
+};
 
-  const handleRegister = async () => {
-    if (!validateRegisterData(credentials)) {
-      handleShowError();
+const RegisterButton: React.FC<Props> = ({handleSubmit, handleAuthError}) => {
+  const handleRegister = async (credentials: RegisterValueTypes) => {
+    console.log(credentials);
+
+    const authResponse = await registerToFirebase(credentials);
+
+    if (!authResponse) {
+      handleAuthError();
       return;
     }
-
-    console.log('registered!');
-
-    //await registerNewUser(credentials);
   };
 
   return (
-    <TouchableOpacity onPress={handleRegister} style={styles.btn}>
+    <TouchableOpacity onPress={handleSubmit(handleRegister)} style={styles.btn}>
       <Text style={styles.text}>Registrarse</Text>
-      <View style={{position: 'absolute', right: 10, bottom: 12}}>
+      <View style={styles.iconContainer}>
         <RightArrowIcon iconSize={17.5} />
       </View>
     </TouchableOpacity>
@@ -47,6 +50,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: appColors.darkBlue,
     textAlign: 'center',
+  },
+  iconContainer: {
+    position: 'absolute',
+    right: 10,
+    bottom: 12,
   },
 });
 
