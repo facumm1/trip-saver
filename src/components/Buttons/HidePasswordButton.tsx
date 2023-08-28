@@ -4,13 +4,21 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import appColors from '../../styles/appColors';
 
 type Props = {
+  hidePassword: boolean;
   handleHidePassword: () => void;
 };
 
-const HidePasswordButton: React.FC<Props> = ({handleHidePassword}) => {
+const HidePasswordButton: React.FC<Props> = ({
+  hidePassword,
+  handleHidePassword,
+}) => {
   return (
     <TouchableOpacity onPress={handleHidePassword} style={styles.btn}>
-      <Ionicons name="eye-off-sharp" size={25} color={appColors.gray} />
+      <Ionicons
+        name={hidePassword ? 'eye' : 'eye-off'}
+        size={25}
+        color={appColors.gray}
+      />
     </TouchableOpacity>
   );
 };

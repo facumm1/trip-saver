@@ -13,8 +13,8 @@ const StackNavigator = () => {
         headerShown: false,
       }}>
       <Stack.Screen name="InitialScreen" component={InitialScreen} />
-      {/* <Stack.Screen name="MainScreen" component={MainScreen} />
-      <Stack.Screen name="TripsListScreen" component={TripsListScreen} /> */}
+      <Stack.Screen name="MainScreen" component={MainScreen} />
+      <Stack.Screen name="TripsListScreen" component={TripsListScreen} />
     </Stack.Navigator>
   );
 };

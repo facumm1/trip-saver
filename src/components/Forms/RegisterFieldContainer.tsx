@@ -5,7 +5,7 @@ import {Control, FieldErrors} from 'react-hook-form';
 import {LoginErrorMsg, LoginFieldName} from '../Text';
 import RegisterField from '../TextField/RegisterField';
 
-import {RegisterTypes, registerValues} from '../../util/AuthFormValues';
+import {RegisterFieldTypes, registerMock} from '../../util/AuthFieldMock';
 import HidePasswordButton from '../Buttons/HidePasswordButton';
 import {useFormField, useToggle} from '../../hooks';
 
@@ -14,17 +14,13 @@ type Props = {
   errors: FieldErrors;
 };
 
-const hidePwdBtn = (handleHidePassword: () => void): JSX.Element => (
-  <HidePasswordButton handleHidePassword={handleHidePassword} />
-);
-
 const RegisterFieldContainer: React.FC<Props> = ({control, errors}) => {
   const {open: hidePassword, handleOpen: handleHidePassword} = useToggle(true);
   const {fieldActive, handleActiveField} = useFormField();
 
   return (
     <View>
-      {registerValues.map((data: RegisterTypes) => (
+      {registerMock.map((data: RegisterFieldTypes) => (
         <View key={data.inputName}>
           <LoginFieldName inputText={data.inputText} />
 
@@ -38,7 +34,12 @@ const RegisterFieldContainer: React.FC<Props> = ({control, errors}) => {
               handleActiveField={handleActiveField}
             />
 
-            {data.inputName === 'password' && hidePwdBtn(handleHidePassword)}
+            {data.inputName === 'password' && (
+              <HidePasswordButton
+                hidePassword={hidePassword}
+                handleHidePassword={handleHidePassword}
+              />
+            )}
           </View>
 
           <LoginErrorMsg inputName={data.inputName} errors={errors} />

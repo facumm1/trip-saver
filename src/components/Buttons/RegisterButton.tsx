@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {UseFormHandleSubmit} from 'react-hook-form';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 import {registerToFirebase} from '../../auth/auth';
 
@@ -14,15 +15,17 @@ type Props = {
 };
 
 const RegisterButton: React.FC<Props> = ({handleSubmit, handleAuthError}) => {
-  const handleRegister = async (credentials: RegisterValueTypes) => {
-    console.log(credentials);
+  const navigation: NavigationProp<any, 'MainScreen'> = useNavigation();
 
+  const handleRegister = async (credentials: RegisterValueTypes) => {
     const authResponse = await registerToFirebase(credentials);
 
     if (!authResponse) {
       handleAuthError();
       return;
     }
+
+    navigation.navigate('MainScreen');
   };
 
   return (

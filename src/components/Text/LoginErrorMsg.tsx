@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     color: '#ff0008',
     fontSize: 13,
     marginTop: 5,
+    marginBottom: 10,
   },
 });
 

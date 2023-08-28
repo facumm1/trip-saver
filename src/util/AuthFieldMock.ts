@@ -1,12 +1,4 @@
-import {CredentialsTypes} from '../hooks/useLoginData';
-
-export interface AuthFormTypes {
-  inputName: keyof CredentialsTypes | string;
-  placeholder: string;
-  inputText: string;
-}
-
-export const loginValues: AuthFormTypes[] = [
+export const loginMock: AuthFieldTypes[] = [
   {
     inputName: 'email',
     inputText: 'Tu correo electrónico',
@@ -19,11 +11,7 @@ export const loginValues: AuthFormTypes[] = [
   },
 ];
 
-export interface RegisterTypes extends AuthFormTypes {
-  errorMsg: string;
-}
-
-export const registerValues: RegisterTypes[] = [
+export const registerMock: RegisterFieldTypes[] = [
   {
     inputName: 'fullName',
     inputText: 'Nombre completo',
@@ -43,3 +31,13 @@ export const registerValues: RegisterTypes[] = [
     errorMsg: 'La contraseña debe tener mínimo 6 letras.',
   },
 ];
+
+export interface AuthFieldTypes {
+  inputName: string;
+  placeholder: string;
+  inputText: string;
+}
+
+export interface RegisterFieldTypes extends AuthFieldTypes {
+  errorMsg: string;
+}

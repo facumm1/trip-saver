@@ -2,17 +2,14 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import appColors from '../styles/appColors';
 import {GetStartedView, AuthView} from '../views';
+import {useToggle} from '../hooks';
 
 export type StartAppType = {
   handleStartApp: () => void;
 };
 
 const InitialScreen: React.FC = () => {
-  const [startApp, setStartApp] = React.useState<boolean>(false);
-
-  const handleStartApp = (): void => {
-    setStartApp(!startApp);
-  };
+  const {open: startApp, handleOpen: handleStartApp} = useToggle();
 
   return (
     <View style={styles.container}>

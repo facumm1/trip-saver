@@ -1,21 +1,25 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import appColors from '../../styles/appColors';
 import RegisterForm from '../Forms/RegisterForm';
+import FadeAnimWrapper from '../../wrapper/HOC/FadeAnimWrapper';
+import {ChangeFormButton} from '../Buttons';
 
 type Props = {handleChangeForm: () => void};
 
 const RegisterContainer: React.FC<Props> = ({handleChangeForm}) => {
   return (
-    <View style={styles.container}>
+    <FadeAnimWrapper wrapperStyle={styles.container}>
       <View style={styles.content}>
         <RegisterForm />
 
-        <TouchableOpacity onPress={handleChangeForm} style={styles.backBtn}>
-          <Text style={styles.backBtnText}>Volver</Text>
-        </TouchableOpacity>
+        <ChangeFormButton
+          title="Volver"
+          handleChangeForm={handleChangeForm}
+          btnStyles={styles.backBtn}
+        />
       </View>
-    </View>
+    </FadeAnimWrapper>
   );
 };
 
@@ -33,7 +37,6 @@ const styles = StyleSheet.create({
     paddingVertical: 2.5,
     paddingHorizontal: 15,
   },
-  backBtnText: {textAlign: 'center'},
 });
 
 export default RegisterContainer;

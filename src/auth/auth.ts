@@ -1,11 +1,9 @@
 import auth from '@react-native-firebase/auth';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   createUserWithEmailAndPassword,
   storeUserData,
   updateUserProfile,
-} from './registerUser';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+} from './register';
 
 type Credentials = {
   fullName?: string;
@@ -18,19 +16,14 @@ export const registerToFirebase = async ({
   email,
   password,
 }: Credentials) => {
-  //TODO revisar types de credentials
   try {
-    console.log('Registrando usuario:', fullName, email, password);
+    const user = await createUserWithEmailAndPassword({email, password});
+    await updateUserProfile({user, fullName});
+    await storeUserData({user, fullName, email, password});
 
-    const user = await createUserWithEmailAndPassword(email, password);
+    const userData = await loginToFirebase({email, password});
 
-    await updateUserProfile(user, fullName as string);
-
-    await storeUserData(user, fullName as string, email, password);
-
-    await loginToFirebase({email, password});
-
-    return true;
+    return userData;
   } catch (error: any) {
     if (
       error.code === 'auth/email-already-in-use' ||
@@ -46,21 +39,11 @@ export const registerToFirebase = async ({
 };
 
 export const loginToFirebase = async ({email, password}: Credentials) => {
-  //const navigation: NavigationProp<any, 'MainScreen'> = useNavigation();
-
   try {
     await auth().signInWithEmailAndPassword(email, password);
+    console.log('Login successful:', email);
 
-    console.log('Iniciando sesion:', email, password);
-
-    const user = auth().currentUser;
-    const uuid = user?.uid;
-
-    /* await AsyncStorage.setItem('fullName', user?.displayName || '');
-    await AsyncStorage.setItem('id', uuid || ''); */
-
-    //navigation.navigate('MainScreen');
-    return true;
+    return auth().currentUser;
   } catch (error: any) {
     if (
       error.code === 'auth/user-not-found' ||

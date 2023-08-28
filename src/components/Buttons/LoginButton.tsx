@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {UseFormHandleSubmit} from 'react-hook-form';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 import {loginToFirebase} from '../../auth/auth';
 
@@ -14,14 +15,24 @@ type Props = {
 };
 
 const LoginButton: React.FC<Props> = ({handleSubmit, handleAuthError}) => {
+  const navigation: NavigationProp<any, 'MainScreen'> = useNavigation();
+
   const handleLogin = async (credentials: LoginValueTypes) => {
-    console.log(credentials);
     const authResponse = await loginToFirebase(credentials);
 
     if (!authResponse) {
       handleAuthError();
       return;
     }
+
+    //console.log(authResponse);
+
+    //const uuid = user?.uid;
+
+    /* await AsyncStorage.setItem('fullName', user?.displayName || '');
+    await AsyncStorage.setItem('id', uuid || ''); */
+
+    navigation.navigate('MainScreen');
   };
 
   //TODO fixear position absolute
