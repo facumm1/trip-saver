@@ -1,4 +1,4 @@
 import LoginErrorMsg from './LoginErrorMsg';
-import LoginFieldName from './LoginFieldName';
+import FieldName from './FieldName';
 
-export {LoginErrorMsg, LoginFieldName};
+export {LoginErrorMsg, FieldName};

@@ -17,9 +17,9 @@ const styles = StyleSheet.create({
   btn: {
     alignItems: 'flex-end',
     borderRadius: 50,
-    justifyContent: 'center',
     backgroundColor: appColors.green,
     flexDirection: 'row',
+    justifyContent: 'center',
     paddingVertical: 10,
     paddingHorizontal: 0,
     width: '50%',

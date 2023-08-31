@@ -2,10 +2,10 @@ import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import appColors from '../../styles/appColors';
 
-type Props = {inputText: string | undefined};
+type Props = {text: string | undefined};
 
-const LoginFieldName: React.FC<Props> = ({inputText}) => {
-  return <Text style={styles.text}>{inputText}</Text>;
+const FieldName: React.FC<Props> = ({text}) => {
+  return <Text style={styles.text}>{text}</Text>;
 };
 
 const styles = StyleSheet.create({
@@ -16,4 +16,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginFieldName;
+export default FieldName;

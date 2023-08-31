@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import appColors from '../styles/appColors';
+import {StyleSheet, View} from 'react-native';
+
 import {GetStartedView, AuthView} from '../views';
 import {useToggle} from '../hooks';
+import appColors from '../styles/appColors';
 
 export type StartAppType = {
   handleStartApp: () => void;

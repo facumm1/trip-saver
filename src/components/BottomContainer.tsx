@@ -1,11 +1,9 @@
 import React from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {TripsCarousel} from './Carousel/TripsCarousel';
 import {NavScreenButton} from './Buttons/NavScreenButton';
 
-const {height} = Dimensions.get('window');
-
-export const BottomContainer = () => {
+const BottomContainer = () => {
   return (
     <View style={bottomContainerStyles.container}>
       <View style={bottomContainerStyles.header}>
@@ -21,12 +19,9 @@ export const BottomContainer = () => {
 
 const bottomContainerStyles = StyleSheet.create({
   container: {
+    flex: 0.5,
     backgroundColor: '#fff',
-    height: height,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
     paddingTop: 20,
-    borderWidth: 2,
   },
   header: {
     flexDirection: 'row',
@@ -34,3 +29,5 @@ const bottomContainerStyles = StyleSheet.create({
   },
   title: {fontWeight: 'bold', fontSize: 20, marginLeft: 15},
 });
+
+export default BottomContainer;
